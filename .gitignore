@@ -1,0 +1,12 @@
+# Logs
+logs
+*.log
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Parcel related files
+dist/
+.cache/
