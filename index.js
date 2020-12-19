@@ -13,16 +13,18 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Add geometry
-const geometry = new THREE.Geometry();
-geometry.vertices.push(
-  new THREE.Vector3(-1.0, -1.0, 0.0),
-  new THREE.Vector3(1.0, -1.0, 0.0),
-  new THREE.Vector3(1.0, 1.0, 0.0),
-  new THREE.Vector3(-1.0, -1.0, 0.0),
-  new THREE.Vector3(1.0, 1.0, 0.0),
-  new THREE.Vector3(-1.0, 1.0, 0.0)
-);
-geometry.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(3, 4, 5));
+const geometry = new THREE.BufferGeometry();
+const vertices = new Float32Array([
+  ...[-1.0, -1.0, 0.0], // bottom left
+  ...[1.0, -1.0, 0.0], // bottom right
+  ...[1.0, 1.0, 0.0], // top right
+
+  ...[1.0, 1.0, 0.0], // top right
+  ...[-1.0, 1.0, 0.0], // top left
+  ...[-1.0, -1.0, 0.0], // bottom left
+]);
+geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+geometry.computeFaceNormals();
 const material = new THREE.MeshBasicMaterial({
   color: 0xffff00,
   wireframe: true,
@@ -35,10 +37,20 @@ camera.position.z = 5;
 
 function animate() {
   requestAnimationFrame(animate);
+  render();
+}
 
-  mesh.rotation.x += 0.01;
-  mesh.rotation.y += 0.01;
+function render() {
+  // Add wiggle to vertex positions
+  const positions = mesh.geometry.attributes.position.array;
+  for (let i = 0; i < positions.length; i++) {
+    positions[i] += 0.01 * (2 * Math.random() - 1);
+  }
+
+  // Tell Three to update vertex positions
+  mesh.geometry.attributes.position.needsUpdate = true;
 
   renderer.render(scene, camera);
 }
+
 animate();
