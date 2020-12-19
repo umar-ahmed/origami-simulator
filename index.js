@@ -18,12 +18,13 @@ const vertices = new Float32Array([
   ...[-1.0, -1.0, 0.0], // bottom left
   ...[1.0, -1.0, 0.0], // bottom right
   ...[1.0, 1.0, 0.0], // top right
-
-  ...[1.0, 1.0, 0.0], // top right
   ...[-1.0, 1.0, 0.0], // top left
-  ...[-1.0, -1.0, 0.0], // bottom left
 ]);
 geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+geometry.setIndex([
+  ...[0, 1, 2], // bottom right
+  ...[2, 3, 0], // top left
+]);
 geometry.computeFaceNormals();
 const material = new THREE.MeshBasicMaterial({
   color: 0xffff00,
