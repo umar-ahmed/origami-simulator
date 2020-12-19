@@ -15,7 +15,12 @@
   "dependencies": {
     "ndarray": "^1.0.19",
     "ndarray-fill": "^1.0.2",
+    "ndarray-gemm": "^1.0.0",
+    "ndarray-matrix-vector-product": "^1.0.0",
     "ndarray-ops": "^1.2.2",
-    "three": "^0.123.0"
+    "ndarray-scratch": "^1.2.0",
+    "ndarray-show": "^2.0.0",
+    "three": "^0.123.0",
+    "zeros": "^1.0.0"
   }
 }
