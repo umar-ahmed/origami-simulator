@@ -1,3 +1,6 @@
+import ndarray from "ndarray";
+import ops from "ndarray-ops";
+import fill from "ndarray-fill";
 import * as THREE from "three";
 
 const scene = new THREE.Scene();
@@ -12,14 +15,20 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Add geometry
-const geometry = new THREE.BufferGeometry();
 const vertices = new Float32Array([
   ...[-1.0, -1.0, 0.0], // bottom left
   ...[1.0, -1.0, 0.0], // bottom right
   ...[1.0, 1.0, 0.0], // top right
   ...[-1.0, 1.0, 0.0], // top left
 ]);
+
+// Generalized coordinates
+const n = vertices.length;
+let q = ndarray(vertices);
+let qdot = ndarray(new Float32Array(n));
+
+// Add geometry
+const geometry = new THREE.BufferGeometry();
 geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
 geometry.setIndex([
   ...[0, 1, 2], // bottom right
@@ -41,12 +50,20 @@ function animate() {
   render();
 }
 
+const dt = 0.001;
+
+// Compute acceleration
+let a = ndarray(new Float32Array(n));
+fill(a, (i) => (i % 3 === 2 ? 0 : 2 * Math.random() - 1));
+
 function render() {
-  // Add wiggle to vertex positions
-  const positions = mesh.geometry.attributes.position.array;
-  for (let i = 0; i < positions.length; i++) {
-    positions[i] += 0.01 * (2 * Math.random() - 1);
-  }
+  // Explicit Euler integration
+  const delta_a = ndarray(new Float32Array(n));
+  ops.muls(delta_a, a, dt);
+  ops.addeq(qdot, a);
+  const delta_qdot = ndarray(new Float32Array(n));
+  ops.muls(delta_qdot, qdot, dt);
+  ops.addeq(q, delta_qdot);
 
   // Tell Three to update vertex positions
   mesh.geometry.attributes.position.needsUpdate = true;
