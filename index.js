@@ -22,18 +22,22 @@ const vertices = new Float32Array([
   ...[-1.0, 1.0, 0.0], // top left
 ]);
 
-// Generalized coordinates
-const n = vertices.length;
-let q = ndarray(vertices);
-let qdot = ndarray(new Float32Array(n));
-
-// Add geometry
-const geometry = new THREE.BufferGeometry();
-geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
-geometry.setIndex([
+const faces = new Int16Array([
   ...[0, 1, 2], // bottom right
   ...[2, 3, 0], // top left
 ]);
+
+const n = vertices.length;
+const m = faces.length;
+
+// Generalized coordinates
+let q = ndarray(vertices);
+let qdot = ndarray(new Float32Array(n));
+
+// Add mesh
+const geometry = new THREE.BufferGeometry();
+geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+geometry.setIndex(new THREE.BufferAttribute(faces, 3));
 geometry.computeFaceNormals();
 const material = new THREE.MeshBasicMaterial({
   color: 0xffff00,
