@@ -12,23 +12,32 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Add box
-const geometry = new THREE.BoxGeometry();
+// Add geometry
+const geometry = new THREE.Geometry();
+geometry.vertices.push(
+  new THREE.Vector3(-1.0, -1.0, 0.0),
+  new THREE.Vector3(1.0, -1.0, 0.0),
+  new THREE.Vector3(1.0, 1.0, 0.0),
+  new THREE.Vector3(-1.0, -1.0, 0.0),
+  new THREE.Vector3(1.0, 1.0, 0.0),
+  new THREE.Vector3(-1.0, 1.0, 0.0)
+);
+geometry.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(3, 4, 5));
 const material = new THREE.MeshBasicMaterial({
   color: 0xffff00,
   wireframe: true,
   wireframeLinewidth: 2,
 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
 camera.position.z = 5;
 
 function animate() {
   requestAnimationFrame(animate);
 
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  mesh.rotation.x += 0.01;
+  mesh.rotation.y += 0.01;
 
   renderer.render(scene, camera);
 }
