@@ -1,0 +1,21 @@
+{
+  "name": "wasm-engine",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@assemblyscript/loader": "^0.17.10"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.17.10",
+    "onchange": "^7.1.0"
+  },
+  "scripts": {
+    "asbuild:untouched": "asc assembly/index.ts --target debug",
+    "asbuild:optimized": "asc assembly/index.ts --target release",
+    "asbuild": "yarn asbuild:untouched && yarn asbuild:optimized",
+    "engine:test": "yarn node tests",
+    "engine:build": "yarn asbuild",
+    "engine:dev": "onchange -i 'assembly/**/*' -- yarn asbuild:untouched"
+  }
+}

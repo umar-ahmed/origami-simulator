@@ -3,24 +3,20 @@
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "author": "Umar Ahmed <umar.ahmed@mail.utoronto.ca>",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel index.html",
+    "dev": "parcel index.html --open",
     "build": "parcel build index.html"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
-    "ndarray": "^1.0.19",
-    "ndarray-fill": "^1.0.2",
-    "ndarray-gemm": "^1.0.0",
-    "ndarray-matrix-vector-product": "^1.0.0",
-    "ndarray-ops": "^1.2.2",
-    "ndarray-scratch": "^1.2.0",
-    "ndarray-show": "^2.0.0",
     "three": "^0.123.0",
-    "zeros": "^1.0.0"
+    "wasm-engine": "workspace:./packages/wasm-engine"
   }
 }
