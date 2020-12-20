@@ -1,7 +1,8 @@
 import instantiateWasm from "wasm-engine";
 
 let wasm = null;
-let dataRef = null;
+let verticesRef = null;
+let edgesRef = null;
 
 // eslint-disable-next-line no-restricted-globals
 self.onmessage = (e) => {
@@ -21,15 +22,17 @@ self.onmessage = (e) => {
     }
 
     case "main/initialize": {
-      // Copy msg.vertexPositions array into the wasm instance, increase GC count
-      dataRef = wasm.exports.__retain(
-        wasm.exports.__newArray(
-          wasm.exports.FLOAT32ARRAY_ID,
-          msg.vertexPositions
-        )
+      // Copy msg.vertices array into the wasm instance, increase GC count
+      verticesRef = wasm.exports.__retain(
+        wasm.exports.__newArray(wasm.exports.FLOAT32ARRAY_ID, msg.vertices)
       );
 
-      wasm.exports.initialize(dataRef);
+      // Copy msg.edges array into the wasm instance, increase GC count
+      edgesRef = wasm.exports.__retain(
+        wasm.exports.__newArray(wasm.exports.INT32ARRAY_ID, msg.edges)
+      );
+
+      wasm.exports.initialize(verticesRef, edgesRef);
 
       self.postMessage({ type: "worker/initialized" });
       return;
@@ -42,14 +45,14 @@ self.onmessage = (e) => {
       const resultRef = wasm.exports.integrate(0.01);
 
       // Copy result array from the wasm instance to our javascript runtime
-      const vertexPositions = wasm.exports.__getFloat32Array(resultRef);
+      const vertices = wasm.exports.__getFloat32Array(resultRef);
 
       // Decrease the GC count from new Float64Array in wasm module
       wasm.exports.__release(resultRef);
 
       return self.postMessage({
         type: "worker/results",
-        vertexPositions,
+        vertices,
       });
     }
   }

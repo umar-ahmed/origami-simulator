@@ -20,7 +20,7 @@ let vertices = new Float32Array([
   ...[-1.0, 1.0, 0.0], // top left
 ]);
 
-const edges = new Int16Array([
+const edges = new Int32Array([
   ...[0, 1], // bottom
   ...[1, 2], // right
   ...[2, 0], // diagonal
@@ -28,7 +28,7 @@ const edges = new Int16Array([
   ...[3, 0], // left
 ]);
 
-const faces = new Int16Array([
+const faces = new Int32Array([
   ...[0, 1, 2], // bottom right
   ...[2, 3, 0], // top left
 ]);
@@ -74,8 +74,8 @@ let integrating = false;
 
 function animate(integrate) {
   if (!integrating) {
-    integrate().then((newPositions) => {
-      mesh.geometry.attributes.position.array = newPositions;
+    integrate().then((newVertices) => {
+      mesh.geometry.attributes.position.array = newVertices;
       mesh.geometry.attributes.position.needsUpdate = true;
       renderer.render(scene, camera);
 
@@ -93,7 +93,8 @@ worker.onmessage = function (e) {
       worker.postMessage({
         type: "main/initialize",
         numVertices: num_vertices,
-        vertexPositions: vertices,
+        vertices,
+        edges,
       });
       return;
     }
@@ -111,7 +112,7 @@ worker.onmessage = function (e) {
     }
     case "worker/results": {
       integrating = false;
-      integrateResolve(msg.vertexPositions);
+      integrateResolve(msg.vertices);
     }
   }
 };
