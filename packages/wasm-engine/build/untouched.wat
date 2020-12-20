@@ -6,8 +6,8 @@
  (type $i32_i32_i32_=>_none (func (param i32 i32 i32)))
  (type $i32_i32_i32_=>_i32 (func (param i32 i32 i32) (result i32)))
  (type $none_=>_none (func))
- (type $i32_i32_=>_f32 (func (param i32 i32) (result f32)))
  (type $i32_f32_=>_i32 (func (param i32 f32) (result i32)))
+ (type $i32_i32_=>_f32 (func (param i32 i32) (result f32)))
  (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
  (type $i32_i32_f32_=>_none (func (param i32 i32 f32)))
  (type $i64_=>_none (func (param i64)))
@@ -29,13 +29,14 @@
  (data (i32.const 364) ",\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\18\00\00\00~\00l\00i\00b\00/\00m\00a\00t\00h\00.\00t\00s\00\00\00\00\00")
  (data (i32.const 412) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 444) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e\00\00\00\00\00\00\00\00\00")
- (data (i32.const 508) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00$\00\00\00~\00l\00i\00b\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s\00\00\00\00\00\00\00\00\00")
- (data (i32.const 572) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 604) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00i\00n\00c\00o\00m\00p\00a\00t\00i\00b\00l\00e\00 \00s\00h\00a\00p\00e\00s\00\00\00\00\00\00\00")
- (data (i32.const 668) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\"\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00i\00n\00d\00e\00x\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 732) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 764) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s\00\00\00\00\00\00\00")
- (data (i32.const 832) "\07\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00!\19\00\00\02\00\00\00 \00\00\00\00\00\00\00\"\19\00\00\00\00\00\00\"\t\00\00\00\00\00\00")
+ (data (i32.const 508) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 540) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 572) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00$\00\00\00~\00l\00i\00b\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 636) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00i\00n\00c\00o\00m\00p\00a\00t\00i\00b\00l\00e\00 \00s\00h\00a\00p\00e\00s\00\00\00\00\00\00\00")
+ (data (i32.const 700) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\"\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00i\00n\00d\00e\00x\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 764) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 796) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s\00\00\00\00\00\00\00")
+ (data (i32.const 864) "\07\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00!\19\00\00\02\00\00\00 \00\00\00\00\00\00\00\"\19\00\00\00\00\00\00\"\t\00\00\00\00\00\00")
  (table $0 1 funcref)
  (global $~lib/rt/tlsf/ROOT (mut i32) (i32.const 0))
  (global $~lib/ASC_LOW_MEMORY_LIMIT i32 (i32.const 0))
@@ -52,8 +53,8 @@
  (global $~lib/math/random_state0_32 (mut i32) (i32.const 0))
  (global $~lib/math/random_state1_32 (mut i32) (i32.const 0))
  (global $assembly/index/acceleration (mut i32) (i32.const 0))
- (global $~lib/rt/__rtti_base i32 (i32.const 832))
- (global $~lib/memory/__heap_base i32 (i32.const 892))
+ (global $~lib/rt/__rtti_base i32 (i32.const 864))
+ (global $~lib/memory/__heap_base i32 (i32.const 924))
  (export "memory" (memory $0))
  (export "__new" (func $~lib/rt/pure/__new))
  (export "__renew" (func $~lib/rt/pure/__renew))
@@ -3644,7 +3645,140 @@
   call $~lib/rt/pure/__release
   local.get $1
  )
+ (func $~lib/array/Array<f32>#get:length (param $0 i32) (result i32)
+  local.get $0
+  i32.load offset=12
+ )
+ (func $assembly/index/VectorXd#get:size (param $0 i32) (result i32)
+  local.get $0
+  i32.load
+  call $~lib/array/Array<f32>#get:length
+ )
+ (func $~lib/array/Array<f32>#__uget (param $0 i32) (param $1 i32) (result f32)
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  i32.const 2
+  i32.shl
+  i32.add
+  f32.load
+ )
+ (func $~lib/array/Array<f32>#__get (param $0 i32) (param $1 i32) (result f32)
+  (local $2 f32)
+  local.get $1
+  local.get $0
+  i32.load offset=12
+  i32.ge_u
+  if
+   i32.const 464
+   i32.const 304
+   i32.const 104
+   i32.const 42
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  local.get $1
+  call $~lib/array/Array<f32>#__uget
+  local.set $2
+  i32.const 0
+  drop
+  local.get $2
+ )
+ (func $assembly/index/VectorXd#muls (param $0 i32) (param $1 f32) (result i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  i32.const 0
+  i32.const 2
+  i32.const 5
+  i32.const 432
+  call $~lib/rt/__newArray
+  call $~lib/rt/pure/__retain
+  local.set $3
+  i32.const 0
+  local.set $2
+  loop $for-loop|0
+   local.get $2
+   local.get $0
+   call $assembly/index/VectorXd#get:size
+   i32.lt_s
+   local.set $4
+   local.get $4
+   if
+    local.get $3
+    local.get $0
+    i32.load
+    local.get $2
+    call $~lib/array/Array<f32>#__get
+    local.get $1
+    f32.mul
+    call $~lib/array/Array<f32>#push
+    drop
+    local.get $2
+    i32.const 1
+    i32.add
+    local.set $2
+    br $for-loop|0
+   end
+  end
+  i32.const 0
+  local.get $3
+  call $assembly/index/VectorXd#constructor
+  local.set $2
+  local.get $3
+  call $~lib/rt/pure/__release
+  local.get $2
+ )
+ (func $assembly/index/VectorXd#adds (param $0 i32) (param $1 f32) (result i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  i32.const 0
+  i32.const 2
+  i32.const 5
+  i32.const 528
+  call $~lib/rt/__newArray
+  call $~lib/rt/pure/__retain
+  local.set $3
+  i32.const 0
+  local.set $2
+  loop $for-loop|0
+   local.get $2
+   local.get $0
+   call $assembly/index/VectorXd#get:size
+   i32.lt_s
+   local.set $4
+   local.get $4
+   if
+    local.get $3
+    local.get $0
+    i32.load
+    local.get $2
+    call $~lib/array/Array<f32>#__get
+    local.get $1
+    f32.add
+    call $~lib/array/Array<f32>#push
+    drop
+    local.get $2
+    i32.const 1
+    i32.add
+    local.set $2
+    br $for-loop|0
+   end
+  end
+  i32.const 0
+  local.get $3
+  call $assembly/index/VectorXd#constructor
+  local.set $2
+  local.get $3
+  call $~lib/rt/pure/__release
+  local.get $2
+ )
  (func $start:assembly/index
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
   global.get $assembly/index/num_vertices
   i32.const 3
   i32.mul
@@ -3659,7 +3793,22 @@
   i32.const 3
   i32.mul
   call $assembly/index/VectorXd.Random
+  local.tee $0
+  f32.const 2
+  call $assembly/index/VectorXd#muls
+  local.tee $1
+  f32.const -1
+  call $assembly/index/VectorXd#adds
+  local.tee $2
+  f32.const 0.10000000149011612
+  call $assembly/index/VectorXd#muls
   global.set $assembly/index/acceleration
+  local.get $0
+  call $~lib/rt/pure/__release
+  local.get $1
+  call $~lib/rt/pure/__release
+  local.get $2
+  call $~lib/rt/pure/__release
  )
  (func $~lib/typedarray/Float32Array#get:length (param $0 i32) (result i32)
   local.get $0
@@ -3676,7 +3825,7 @@
   i32.ge_u
   if
    i32.const 464
-   i32.const 528
+   i32.const 592
    i32.const 1176
    i32.const 64
    call $~lib/builtins/abort
@@ -3700,7 +3849,7 @@
   i32.const 0
   i32.const 2
   i32.const 5
-  i32.const 432
+  i32.const 560
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $2
@@ -3749,91 +3898,6 @@
   local.get $0
   call $~lib/rt/pure/__release
  )
- (func $~lib/array/Array<f32>#get:length (param $0 i32) (result i32)
-  local.get $0
-  i32.load offset=12
- )
- (func $assembly/index/VectorXd#get:size (param $0 i32) (result i32)
-  local.get $0
-  i32.load
-  call $~lib/array/Array<f32>#get:length
- )
- (func $~lib/array/Array<f32>#__uget (param $0 i32) (param $1 i32) (result f32)
-  local.get $0
-  i32.load offset=4
-  local.get $1
-  i32.const 2
-  i32.shl
-  i32.add
-  f32.load
- )
- (func $~lib/array/Array<f32>#__get (param $0 i32) (param $1 i32) (result f32)
-  (local $2 f32)
-  local.get $1
-  local.get $0
-  i32.load offset=12
-  i32.ge_u
-  if
-   i32.const 464
-   i32.const 304
-   i32.const 104
-   i32.const 42
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  local.get $1
-  call $~lib/array/Array<f32>#__uget
-  local.set $2
-  i32.const 0
-  drop
-  local.get $2
- )
- (func $assembly/index/VectorXd#muls (param $0 i32) (param $1 f32) (result i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  i32.const 0
-  i32.const 2
-  i32.const 5
-  i32.const 592
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.set $3
-  i32.const 0
-  local.set $2
-  loop $for-loop|0
-   local.get $2
-   local.get $0
-   call $assembly/index/VectorXd#get:size
-   i32.lt_s
-   local.set $4
-   local.get $4
-   if
-    local.get $3
-    local.get $0
-    i32.load
-    local.get $2
-    call $~lib/array/Array<f32>#__get
-    local.get $1
-    f32.mul
-    call $~lib/array/Array<f32>#push
-    drop
-    local.get $2
-    i32.const 1
-    i32.add
-    local.set $2
-    br $for-loop|0
-   end
-  end
-  i32.const 0
-  local.get $3
-  call $assembly/index/VectorXd#constructor
-  local.set $2
-  local.get $3
-  call $~lib/rt/pure/__release
-  local.get $2
- )
  (func $assembly/index/VectorXd#addv (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
@@ -3848,8 +3912,8 @@
   i32.eq
   i32.eqz
   if
-   i32.const 624
-   i32.const 688
+   i32.const 656
+   i32.const 720
    i32.const 57
    i32.const 5
    call $~lib/builtins/abort
@@ -3858,7 +3922,7 @@
   i32.const 0
   i32.const 2
   i32.const 5
-  i32.const 752
+  i32.const 784
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $3
@@ -3931,7 +3995,7 @@
   i32.gt_u
   if
    i32.const 256
-   i32.const 784
+   i32.const 816
    i32.const 18
    i32.const 57
    call $~lib/builtins/abort
@@ -3999,7 +4063,7 @@
   i32.ge_u
   if
    i32.const 464
-   i32.const 528
+   i32.const 592
    i32.const 1187
    i32.const 64
    call $~lib/builtins/abort

@@ -46,7 +46,7 @@ class VectorXd {
   }
 
   adds(scalar: f32): VectorXd {
-    const newData = [];
+    const newData: f32[] = [];
     for (let i = 0; i < this.size; i++) {
       newData.push(this.data[i] + scalar);
     }
@@ -207,8 +207,9 @@ const num_faces = 2;
 let q = VectorXd.Zeros(num_vertices * 3);
 let qdot = VectorXd.Zeros(num_vertices * 3);
 let acceleration = VectorXd.Random(num_vertices * 3)
-  .muls(0.02)
-  .adds(-1);
+  .muls(2)
+  .adds(-1)
+  .muls(0.1);
 
 export function initialize(vertexPositions: Float32Array): void {
   let data: f32[] = [];
