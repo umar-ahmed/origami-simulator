@@ -55,7 +55,7 @@
  (global $assembly/index/num_vertices i32 (i32.const 4))
  (global $assembly/index/num_edges i32 (i32.const 5))
  (global $assembly/index/num_faces i32 (i32.const 2))
- (global $assembly/index/k_beam f32 (f32.const 2))
+ (global $assembly/index/k_beam f32 (f32.const 0.10000000149011612))
  (global $assembly/index/vertices (mut i32) (i32.const 0))
  (global $assembly/index/edges (mut i32) (i32.const 0))
  (global $assembly/index/q (mut i32) (i32.const 0))

@@ -384,7 +384,7 @@ class MatrixXd {
 const num_vertices: i32 = 4;
 const num_edges: i32 = 5;
 const num_faces: i32 = 2;
-const k_beam: f32 = 2.0;
+const k_beam: f32 = 0.1;
 
 let vertices = VectorXd.Zeros(num_vertices * 3);
 let edges = VectorXi.Zeros(num_edges * 2);

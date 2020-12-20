@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -8,9 +9,28 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+
+{
+  const light = new THREE.PointLight(0xffffff, 1);
+  light.position.set(0, 0, 0);
+  scene.add(light);
+}
+
+{
+  const light = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(light);
+}
+
+const gridHelper = new THREE.GridHelper(10, 10);
+scene.add(gridHelper);
+
+const axesHelper = new THREE.AxesHelper(5);
+scene.add(axesHelper);
+
+var controls = new OrbitControls(camera, renderer.domElement);
 
 // Setup geometry
 let vertices = new Float32Array([
@@ -34,24 +54,53 @@ const faces = new Int32Array([
 ]);
 
 // Set up dimensions
-const num_vertices = vertices.length / 3;
-const num_edges = edges.length / 2;
-const num_faces = faces.length / 3;
+// const num_vertices = vertices.length / 3;
+// const num_edges = edges.length / 2;
+// const num_faces = faces.length / 3;
+
+// Create buffer attribute for vertex positions
+const positionAttribute = new THREE.BufferAttribute(vertices, 3);
+positionAttribute.setUsage(THREE.DynamicDrawUsage);
 
 // Add mesh
-const geometry = new THREE.BufferGeometry();
-geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
-geometry.setIndex(new THREE.BufferAttribute(faces, 3));
-geometry.computeFaceNormals();
-const material = new THREE.MeshBasicMaterial({
-  color: 0xffff00,
-  wireframe: true,
-  wireframeLinewidth: 2,
+const material = new THREE.MeshPhongMaterial({
+  flatShading: true,
+  color: 0xffffff,
+  side: THREE.DoubleSide,
+  polygonOffset: true,
+  polygonOffsetFactor: 0.5, // positive value pushes polygon further away
+  polygonOffsetUnits: 1,
 });
-const mesh = new THREE.Mesh(geometry, material);
+const mesh = new THREE.Mesh(new THREE.BufferGeometry(), material);
+mesh.geometry.setAttribute("position", positionAttribute);
+mesh.geometry.setIndex([
+  ...[0, 1, 2], // bottom right
+  ...[2, 3, 0], // top left
+]);
+mesh.geometry.computeFaceNormals();
+mesh.geometry.computeBoundingBox();
+mesh.geometry.computeBoundingSphere();
 scene.add(mesh);
 
-camera.position.z = 5;
+const lineMaterial = new THREE.LineBasicMaterial({
+  color: 0x000000,
+  linewidth: 1,
+});
+const lines = new THREE.LineSegments(new THREE.BufferGeometry(), lineMaterial);
+lines.geometry.setAttribute("position", positionAttribute);
+lines.geometry.setIndex([
+  ...[0, 1], // bottom
+  ...[1, 2], // right
+  ...[2, 0], // diagonal
+  ...[2, 3], // top
+  ...[3, 0], // left
+]);
+lines.geometry.computeBoundingBox();
+lines.geometry.computeBoundingSphere();
+scene.add(lines);
+
+camera.position.z = 3;
+controls.update();
 
 // // Setup edge vector selection matrix
 // const E = pool.zeros([num_edges * 3, num_vertices * 3], "float32");
@@ -75,8 +124,8 @@ let integrating = false;
 function animate(integrate) {
   if (!integrating) {
     integrate().then((newVertices) => {
-      mesh.geometry.attributes.position.array = newVertices;
-      mesh.geometry.attributes.position.needsUpdate = true;
+      positionAttribute.array = newVertices;
+      positionAttribute.needsUpdate = true;
       renderer.render(scene, camera);
 
       requestAnimationFrame(() => animate(integrate));
@@ -92,7 +141,6 @@ worker.onmessage = function (e) {
     case "worker/ready": {
       worker.postMessage({
         type: "main/initialize",
-        numVertices: num_vertices,
         vertices,
         edges,
       });
