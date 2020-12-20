@@ -42,7 +42,7 @@ self.onmessage = (e) => {
       if (!wasm) throw new Error("wasm module not ready yet");
 
       // Do the calculations in this thread synchronously
-      const resultRef = wasm.exports.integrate(0.01);
+      const resultRef = wasm.exports.integrate(0.1);
 
       // Copy result array from the wasm instance to our javascript runtime
       const vertices = wasm.exports.__getFloat32Array(resultRef);

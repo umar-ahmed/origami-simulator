@@ -58,8 +58,8 @@ class VectorXd {
     assert(size > 0 && size < this.size, "invalid range");
     assert(startIndex >= 0 && startIndex + size <= this.size, "invalid range");
     const newData: f32[] = [];
-    for (let i = 0; i < size; i++) {
-      newData.push(this.data[startIndex + i]);
+    for (let i = startIndex; i < startIndex + size; i++) {
+      newData.push(this.data[i]);
     }
     return new VectorXd(newData);
   }
@@ -384,7 +384,8 @@ class MatrixXd {
 const num_vertices: i32 = 4;
 const num_edges: i32 = 5;
 const num_faces: i32 = 2;
-const k_beam: f32 = 0.1;
+const damping_ratio: f32 = 0.02;
+const stiffness: f32 = 2;
 
 let vertices = VectorXd.Zeros(num_vertices * 3);
 let edges = VectorXi.Zeros(num_edges * 2);
@@ -411,12 +412,16 @@ export function initialize(
   edges = new VectorXi(edgesData);
 
   // Initialize generalized coordinates
-  // q = new VectorXd(vertices.data);
-  q = VectorXd.Random(num_vertices * 3);
+  q = new VectorXd(vertices.data).addv(
+    VectorXd.Random(num_vertices * 3)
+      .muls(2.0)
+      .adds(-1.0)
+      .muls(0.2)
+  );
   qdot = VectorXd.Zeros(num_vertices * 3);
 }
 
-function compute_beam_force(): VectorXd {
+function compute_axial_force(): VectorXd {
   let force = VectorXd.Zeros(num_vertices * 3);
 
   // Add force contribution for each edge endpoint
@@ -435,8 +440,10 @@ function compute_beam_force(): VectorXd {
     const l = bDeformedVertex.subv(aDeformedVertex).norm();
     const l0 = bVertex.subv(aVertex).norm();
 
-    const f_ab = ab.muls(l - l0).muls(-k_beam);
-    const f_ba = ba.muls(l - l0).muls(-k_beam);
+    const k_axial: f32 = stiffness / l0;
+
+    const f_ab = ba.muls(l - l0).muls(-k_axial);
+    const f_ba = ab.muls(l - l0).muls(-k_axial);
 
     force.set(3 * aIndex + 0, force.get(3 * aIndex + 0) + f_ab.get(0));
     force.set(3 * aIndex + 1, force.get(3 * aIndex + 1) + f_ab.get(1));
@@ -459,23 +466,56 @@ function compute_face_force(): VectorXd {
 }
 
 function compute_damping_force(): VectorXd {
-  return VectorXd.Zeros(num_vertices * 3);
+  let force = VectorXd.Zeros(num_vertices * 3);
+
+  // Add force contribution for each edge endpoint
+  for (let i = 0; i < num_edges; i++) {
+    const aIndex: i32 = edges.get(2 * i + 0);
+    const bIndex: i32 = edges.get(2 * i + 1);
+
+    const aVelocity = qdot.segment(3, 3 * aIndex);
+    const bVelocity = qdot.segment(3, 3 * bIndex);
+
+    const aVertex = vertices.segment(3, 3 * aIndex);
+    const bVertex = vertices.segment(3, 3 * bIndex);
+    const l0 = bVertex.subv(aVertex).norm();
+
+    const k_axial: f32 = stiffness / l0;
+
+    const f_ab = bVelocity
+      .subv(aVelocity)
+      .muls(2 * damping_ratio * Mathf.sqrt(k_axial));
+    const f_ba = aVelocity
+      .subv(bVelocity)
+      .muls(2 * damping_ratio * Mathf.sqrt(k_axial));
+
+    force.set(3 * aIndex + 0, force.get(3 * aIndex + 0) + f_ab.get(0));
+    force.set(3 * aIndex + 1, force.get(3 * aIndex + 1) + f_ab.get(1));
+    force.set(3 * aIndex + 2, force.get(3 * aIndex + 2) + f_ab.get(2));
+
+    force.set(3 * bIndex + 0, force.get(3 * bIndex + 0) + f_ba.get(0));
+    force.set(3 * bIndex + 1, force.get(3 * bIndex + 1) + f_ba.get(1));
+    force.set(3 * bIndex + 2, force.get(3 * bIndex + 2) + f_ba.get(2));
+  }
+
+  return force;
 }
 
 function compute_acceleration(): VectorXd {
-  const F_beam = compute_beam_force();
+  const F_axial = compute_axial_force();
   const F_crease = compute_crease_force();
   const F_face = compute_face_force();
   const F_damping = compute_damping_force();
-  const F_total = F_beam.addv(F_crease).addv(F_face).addv(F_damping);
-  const mass: f32 = 1.0;
-  return F_total.divs(mass);
+  const F_total = F_axial.addv(F_crease).addv(F_face).addv(F_damping);
+  return F_total;
 }
 
 export function integrate(dt: f32): Float32Array {
   const acceleration = compute_acceleration();
+
   qdot = qdot.addv(acceleration.muls(dt));
   q = q.addv(qdot.muls(dt));
+
   const result = new Float32Array(q.size);
   for (let i = 0; i < q.size; i++) {
     result[i] = q.data[i];
