@@ -1,10 +1,12 @@
 // The entry file of your WebAssembly module.
 
+export const FLOAT32ARRAY_ID = idof<Float32Array>();
+
 class VectorXd {
-  constructor(public data: f64[] = []) {}
+  constructor(public data: f32[] = []) {}
 
   static Zeros(size: i32): VectorXd {
-    let data: f64[] = [];
+    let data: f32[] = [];
     for (let i = 0; i < size; i++) {
       data.push(0.0);
     }
@@ -12,9 +14,17 @@ class VectorXd {
   }
 
   static Ones(size: i32): VectorXd {
-    let data: f64[] = [];
+    let data: f32[] = [];
     for (let i = 0; i < size; i++) {
       data.push(1.0);
+    }
+    return new VectorXd(data);
+  }
+
+  static Random(size: i32): VectorXd {
+    let data: f32[] = [];
+    for (let i = 0; i < size; i++) {
+      data.push(Mathf.random());
     }
     return new VectorXd(data);
   }
@@ -27,15 +37,15 @@ class VectorXd {
     return this.data.length;
   }
 
-  sum(): f64 {
-    let total: f64 = 0;
+  sum(): f32 {
+    let total: f32 = 0;
     for (let i = 0; i < this.size; i++) {
       total += this.data[i];
     }
     return total;
   }
 
-  adds(scalar: f64): VectorXd {
+  adds(scalar: f32): VectorXd {
     const newData = [];
     for (let i = 0; i < this.size; i++) {
       newData.push(this.data[i] + scalar);
@@ -45,24 +55,24 @@ class VectorXd {
 
   addv(ref: VectorXd): VectorXd {
     assert(this.size == ref.size, "incompatible shapes");
-    const newData: f64[] = [];
+    const newData: f32[] = [];
     for (let i = 0; i < this.size; i++) {
       newData.push(this.data[i] + ref.data[i]);
     }
     return new VectorXd(newData);
   }
 
-  dot(ref: VectorXd): f64 {
+  dot(ref: VectorXd): f32 {
     assert(this.size == ref.size, "incompatible shapes");
-    let total: f64 = 0;
+    let total: f32 = 0;
     for (let i = 0; i < this.size; i++) {
       total += this.data[i] * ref.data[i];
     }
     return total;
   }
 
-  muls(scalar: f64): VectorXd {
-    const newData = [];
+  muls(scalar: f32): VectorXd {
+    const newData: f32[] = [];
     for (let i = 0; i < this.size; i++) {
       newData.push(this.data[i] * scalar);
     }
@@ -70,9 +80,9 @@ class VectorXd {
   }
 }
 
-export class MatrixXd {
+class MatrixXd {
   constructor(
-    public data: Array<f64> = [],
+    public data: Array<f32> = [],
     public shape: Array<i32> = [data.length]
   ) {}
 
@@ -81,7 +91,7 @@ export class MatrixXd {
     for (let i = 0; i < shape.length; i++) {
       size *= shape[i];
     }
-    let data: f64[] = [];
+    let data: f32[] = [];
     for (let i = 0; i < size; i++) {
       data.push(0.0);
     }
@@ -93,7 +103,7 @@ export class MatrixXd {
     for (let i = 0; i < shape.length; i++) {
       size *= shape[i];
     }
-    let data: f64[] = [];
+    let data: f32[] = [];
     for (let i = 0; i < size; i++) {
       data.push(1.0);
     }
@@ -102,7 +112,7 @@ export class MatrixXd {
 
   static Identity(size: i32): MatrixXd {
     let shape = [size, size];
-    let data: f64[] = [];
+    let data: f32[] = [];
     for (let i = 0; i < size; i++) {
       for (let j = 0; j < size; j++) {
         if (i == j) {
@@ -119,8 +129,8 @@ export class MatrixXd {
     return this.data.length;
   }
 
-  sum(): f64 {
-    let total: f64 = 0;
+  sum(): f32 {
+    let total: f32 = 0;
     for (let i = 0; i < this.size; i++) {
       total += unchecked(this.data[i]);
     }
@@ -145,7 +155,7 @@ export class MatrixXd {
 
   addm(ref: MatrixXd): MatrixXd {
     assert(this.size == ref.size);
-    const newData = new Array<f64>(this.size);
+    const newData = new Array<f32>(this.size);
     for (let i = 0; i < this.size; i++) {
       unchecked((newData[i] = this.data[i] + ref.data[i]));
     }
@@ -154,7 +164,7 @@ export class MatrixXd {
 
   subm(ref: MatrixXd): MatrixXd {
     assert(this.size == ref.size);
-    const newData = new Array<f64>(this.size);
+    const newData = new Array<f32>(this.size);
     for (let i = 0; i < this.size; i++) {
       unchecked((newData[i] = this.data[i] - ref.data[i]));
     }
@@ -167,7 +177,7 @@ export class MatrixXd {
     const c = this.shape[1];
     let newShape = [r, c];
     let newSize = r * c;
-    const newData: f64[] = [];
+    const newData: f32[] = [];
     for (let i = 0; i < r; i++) {
       for (let j = 0; j < c; j++) {
         const row = this.row(i);
@@ -182,7 +192,7 @@ export class MatrixXd {
     assert(this.shape[1] == ref.shape[0], "incompatible shapes");
     const r = this.shape[0];
     const c = this.shape[1];
-    const newData: f64[] = [];
+    const newData: f32[] = [];
     for (let i = 0; i < r; i++) {
       const row = this.row(i);
       newData.push(row.dot(ref));
@@ -191,13 +201,30 @@ export class MatrixXd {
   }
 }
 
-const i2 = MatrixXd.Identity(2);
-const m0 = MatrixXd.Zeros([2, 2]);
-const m1 = MatrixXd.Ones([2, 2]);
-const m2 = new MatrixXd([1, 2, 3, 4], [2, 2]);
-const m3 = new MatrixXd([5, 6, 7, 8], [2, 2]);
-const v1 = new VectorXd([1, 2]);
+const num_vertices = 4;
+const num_edges = 5;
+const num_faces = 2;
+let q = VectorXd.Zeros(num_vertices * 3);
+let qdot = VectorXd.Zeros(num_vertices * 3);
+let acceleration = VectorXd.Random(num_vertices * 3)
+  .muls(0.02)
+  .adds(-1);
 
-export function compute(): f64 {
-  return m2.mulm(m3).sum();
+export function initialize(vertexPositions: Float32Array): void {
+  let data: f32[] = [];
+  for (let i = 0; i < vertexPositions.length; i++) {
+    data.push(vertexPositions[i]);
+  }
+  q = new VectorXd(data);
+  qdot = VectorXd.Zeros(num_vertices * 3);
+}
+
+export function integrate(dt: f32): Float32Array {
+  qdot = qdot.addv(acceleration.muls(dt));
+  q = q.addv(qdot.muls(dt));
+  const result = new Float32Array(q.size);
+  for (let i = 0; i < q.size; i++) {
+    result[i] = q.data[i];
+  }
+  return result;
 }

@@ -13,7 +13,7 @@ async function instantiate() {
     fs.readFileSync(__dirname + WASM_PATH),
     imports
   );
-  return wasmModule.exports;
+  return wasmModule;
 }
 
 module.exports = instantiate;

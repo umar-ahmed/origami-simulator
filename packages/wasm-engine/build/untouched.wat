@@ -2,18 +2,22 @@
  (type $i32_i32_=>_none (func (param i32 i32)))
  (type $i32_=>_i32 (func (param i32) (result i32)))
  (type $i32_i32_=>_i32 (func (param i32 i32) (result i32)))
- (type $i32_i32_i32_=>_i32 (func (param i32 i32 i32) (result i32)))
  (type $i32_=>_none (func (param i32)))
  (type $i32_i32_i32_=>_none (func (param i32 i32 i32)))
+ (type $i32_i32_i32_=>_i32 (func (param i32 i32 i32) (result i32)))
  (type $none_=>_none (func))
- (type $i32_i32_=>_f64 (func (param i32 i32) (result f64)))
+ (type $i32_i32_=>_f32 (func (param i32 i32) (result f32)))
+ (type $i32_f32_=>_i32 (func (param i32 f32) (result i32)))
  (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
- (type $i32_i32_f64_=>_none (func (param i32 i32 f64)))
+ (type $i32_i32_f32_=>_none (func (param i32 i32 f32)))
+ (type $i64_=>_none (func (param i64)))
  (type $i32_i32_i32_i32_=>_i32 (func (param i32 i32 i32 i32) (result i32)))
- (type $i32_f64_=>_i32 (func (param i32 f64) (result i32)))
+ (type $f32_=>_i32 (func (param f32) (result i32)))
+ (type $i64_=>_i64 (func (param i64) (result i64)))
+ (type $none_=>_f32 (func (result f32)))
  (type $none_=>_f64 (func (result f64)))
- (type $i32_=>_f64 (func (param i32) (result f64)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
+ (import "env" "seed" (func $~lib/builtins/seed (result f64)))
  (memory $0 1)
  (data (i32.const 12) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00(\00\00\00a\00l\00l\00o\00c\00a\00t\00i\00o\00n\00 \00t\00o\00o\00 \00l\00a\00r\00g\00e\00\00\00\00\00")
  (data (i32.const 76) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00p\00u\00r\00e\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
@@ -21,61 +25,44 @@
  (data (i32.const 204) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 236) ",\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h\00")
  (data (i32.const 284) ",\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\1a\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00.\00t\00s\00\00\00")
- (data (i32.const 332) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\08\00\00\00\02\00\00\00\02\00\00\00\00\00\00\00")
- (data (i32.const 364) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e\00\00\00\00\00\00\00\00\00")
- (data (i32.const 428) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 460) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\08\00\00\00\02\00\00\00\02\00\00\00\00\00\00\00")
- (data (i32.const 492) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 524) "<\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\f0?\00\00\00\00\00\00\00@\00\00\00\00\00\00\08@\00\00\00\00\00\00\10@\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 588) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\08\00\00\00\02\00\00\00\02\00\00\00\00\00\00\00")
- (data (i32.const 620) "<\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00 \00\00\00\00\00\00\00\00\00\14@\00\00\00\00\00\00\18@\00\00\00\00\00\00\1c@\00\00\00\00\00\00 @\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 684) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\08\00\00\00\02\00\00\00\02\00\00\00\00\00\00\00")
- (data (i32.const 716) ",\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\10\00\00\00\00\00\00\00\00\00\f0?\00\00\00\00\00\00\00@\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 764) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\"\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00i\00n\00d\00e\00x\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 828) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 860) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00i\00n\00c\00o\00m\00p\00a\00t\00i\00b\00l\00e\00 \00s\00h\00a\00p\00e\00s\00\00\00\00\00\00\00")
- (data (i32.const 924) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 956) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 992) "\07\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00\"\1a\00\00\00\00\00\00\"\t\00\00\00\00\00\00 \00\00\00\00\00\00\00")
+ (data (i32.const 332) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 364) ",\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\18\00\00\00~\00l\00i\00b\00/\00m\00a\00t\00h\00.\00t\00s\00\00\00\00\00")
+ (data (i32.const 412) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 444) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 508) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00$\00\00\00~\00l\00i\00b\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 572) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 604) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00i\00n\00c\00o\00m\00p\00a\00t\00i\00b\00l\00e\00 \00s\00h\00a\00p\00e\00s\00\00\00\00\00\00\00")
+ (data (i32.const 668) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\"\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00i\00n\00d\00e\00x\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 732) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 764) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s\00\00\00\00\00\00\00")
+ (data (i32.const 832) "\07\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00!\19\00\00\02\00\00\00 \00\00\00\00\00\00\00\"\19\00\00\00\00\00\00\"\t\00\00\00\00\00\00")
  (table $0 1 funcref)
  (global $~lib/rt/tlsf/ROOT (mut i32) (i32.const 0))
  (global $~lib/ASC_LOW_MEMORY_LIMIT i32 (i32.const 0))
  (global $~lib/ASC_SHRINK_LEVEL i32 (i32.const 0))
- (global $assembly/index/i2 (mut i32) (i32.const 0))
- (global $assembly/index/m0 (mut i32) (i32.const 0))
- (global $assembly/index/m1 (mut i32) (i32.const 0))
- (global $assembly/index/m2 (mut i32) (i32.const 0))
- (global $assembly/index/m3 (mut i32) (i32.const 0))
- (global $assembly/index/v1 (mut i32) (i32.const 0))
- (global $~argumentsLength (mut i32) (i32.const 0))
- (global $~lib/rt/__rtti_base i32 (i32.const 992))
- (global $~lib/memory/__heap_base i32 (i32.const 1052))
- (global $assembly/index/MatrixXd i32 (i32.const 3))
+ (global $assembly/index/FLOAT32ARRAY_ID i32 (i32.const 3))
+ (global $assembly/index/num_vertices i32 (i32.const 4))
+ (global $assembly/index/num_edges i32 (i32.const 5))
+ (global $assembly/index/num_faces i32 (i32.const 2))
+ (global $assembly/index/q (mut i32) (i32.const 0))
+ (global $assembly/index/qdot (mut i32) (i32.const 0))
+ (global $~lib/math/random_seeded (mut i32) (i32.const 0))
+ (global $~lib/math/random_state0_64 (mut i64) (i64.const 0))
+ (global $~lib/math/random_state1_64 (mut i64) (i64.const 0))
+ (global $~lib/math/random_state0_32 (mut i32) (i32.const 0))
+ (global $~lib/math/random_state1_32 (mut i32) (i32.const 0))
+ (global $assembly/index/acceleration (mut i32) (i32.const 0))
+ (global $~lib/rt/__rtti_base i32 (i32.const 832))
+ (global $~lib/memory/__heap_base i32 (i32.const 892))
  (export "memory" (memory $0))
  (export "__new" (func $~lib/rt/pure/__new))
  (export "__renew" (func $~lib/rt/pure/__renew))
  (export "__retain" (func $~lib/rt/pure/__retain))
  (export "__release" (func $~lib/rt/pure/__release))
  (export "__rtti_base" (global $~lib/rt/__rtti_base))
- (export "MatrixXd" (global $assembly/index/MatrixXd))
- (export "MatrixXd#get:data" (func $assembly/index/MatrixXd#get:data))
- (export "MatrixXd#set:data" (func $assembly/index/MatrixXd#set:data))
- (export "MatrixXd#get:shape" (func $assembly/index/MatrixXd#get:shape))
- (export "MatrixXd#set:shape" (func $assembly/index/MatrixXd#set:shape))
- (export "MatrixXd#constructor" (func $assembly/index/MatrixXd#constructor@varargs))
- (export "MatrixXd#get:size" (func $assembly/index/MatrixXd#get:size))
- (export "MatrixXd#sum" (func $assembly/index/MatrixXd#sum))
- (export "MatrixXd#row" (func $assembly/index/MatrixXd#row))
- (export "MatrixXd#col" (func $assembly/index/MatrixXd#col))
- (export "MatrixXd#addm" (func $assembly/index/MatrixXd#addm))
- (export "MatrixXd#subm" (func $assembly/index/MatrixXd#subm))
- (export "MatrixXd#mulm" (func $assembly/index/MatrixXd#mulm))
- (export "MatrixXd#mulv" (func $assembly/index/MatrixXd#mulv))
- (export "MatrixXd.Zeros" (func $assembly/index/MatrixXd.Zeros))
- (export "MatrixXd.Ones" (func $assembly/index/MatrixXd.Ones))
- (export "MatrixXd.Identity" (func $assembly/index/MatrixXd.Identity))
- (export "compute" (func $assembly/index/compute))
- (export "__setArgumentsLength" (func $~setArgumentsLength))
+ (export "FLOAT32ARRAY_ID" (global $assembly/index/FLOAT32ARRAY_ID))
+ (export "initialize" (func $assembly/index/initialize))
+ (export "integrate" (func $assembly/index/integrate))
  (start $~start)
  (func $~lib/rt/tlsf/removeBlock (param $0 i32) (param $1 i32)
   (local $2 i32)
@@ -3358,7 +3345,7 @@
    i32.store offset=8
   end
  )
- (func $~lib/array/Array<f64>#push (param $0 i32) (param $1 f64) (result i32)
+ (func $~lib/array/Array<f32>#push (param $0 i32) (param $1 f32) (result i32)
   (local $2 i32)
   (local $3 i32)
   local.get $0
@@ -3370,29 +3357,29 @@
   local.set $3
   local.get $0
   local.get $3
-  i32.const 3
+  i32.const 2
   call $~lib/array/ensureSize
   i32.const 0
   drop
   local.get $0
   i32.load offset=4
   local.get $2
-  i32.const 3
+  i32.const 2
   i32.shl
   i32.add
   local.get $1
-  f64.store
+  f32.store
   local.get $0
   local.get $3
   i32.store offset=12
   local.get $3
  )
- (func $assembly/index/MatrixXd#constructor (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $assembly/index/VectorXd#constructor (param $0 i32) (param $1 i32) (result i32)
   local.get $0
   i32.eqz
   if
-   i32.const 8
-   i32.const 3
+   i32.const 4
+   i32.const 4
    call $~lib/rt/pure/__new
    call $~lib/rt/pure/__retain
    local.set $0
@@ -3401,93 +3388,37 @@
   local.get $1
   call $~lib/rt/pure/__retain
   i32.store
-  local.get $0
-  local.get $2
-  call $~lib/rt/pure/__retain
-  i32.store offset=4
   local.get $1
   call $~lib/rt/pure/__retain
   local.set $1
-  local.get $2
-  call $~lib/rt/pure/__retain
-  local.set $2
   local.get $1
-  call $~lib/rt/pure/__release
-  local.get $2
   call $~lib/rt/pure/__release
   local.get $0
  )
- (func $assembly/index/MatrixXd.Identity (param $0 i32) (result i32)
+ (func $assembly/index/VectorXd.Zeros (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  (local $6 i32)
-  i32.const 2
+  i32.const 0
   i32.const 2
   i32.const 5
-  i32.const 0
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.set $1
-  local.get $1
-  i32.load offset=4
-  local.set $2
-  local.get $2
-  local.get $0
-  i32.store
-  local.get $2
-  local.get $0
-  i32.store offset=4
-  local.get $1
-  local.set $2
-  i32.const 0
-  i32.const 3
-  i32.const 4
   i32.const 224
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
-  local.set $3
+  local.set $2
   i32.const 0
   local.set $1
   loop $for-loop|0
    local.get $1
    local.get $0
    i32.lt_s
-   local.set $4
-   local.get $4
+   local.set $3
+   local.get $3
    if
-    i32.const 0
-    local.set $5
-    loop $for-loop|1
-     local.get $5
-     local.get $0
-     i32.lt_s
-     local.set $6
-     local.get $6
-     if
-      local.get $1
-      local.get $5
-      i32.eq
-      if
-       local.get $3
-       f64.const 1
-       call $~lib/array/Array<f64>#push
-       drop
-      else
-       local.get $3
-       f64.const 0
-       call $~lib/array/Array<f64>#push
-       drop
-      end
-      local.get $5
-      i32.const 1
-      i32.add
-      local.set $5
-      br $for-loop|1
-     end
-    end
+    local.get $2
+    f32.const 0
+    call $~lib/array/Array<f32>#push
+    drop
     local.get $1
     i32.const 1
     i32.add
@@ -3496,37 +3427,354 @@
    end
   end
   i32.const 0
-  local.get $3
   local.get $2
-  call $assembly/index/MatrixXd#constructor
+  call $assembly/index/VectorXd#constructor
   local.set $1
   local.get $2
   call $~lib/rt/pure/__release
+  local.get $1
+ )
+ (func $~lib/math/murmurHash3 (param $0 i64) (result i64)
+  local.get $0
+  local.get $0
+  i64.const 33
+  i64.shr_u
+  i64.xor
+  local.set $0
+  local.get $0
+  i64.const -49064778989728563
+  i64.mul
+  local.set $0
+  local.get $0
+  local.get $0
+  i64.const 33
+  i64.shr_u
+  i64.xor
+  local.set $0
+  local.get $0
+  i64.const -4265267296055464877
+  i64.mul
+  local.set $0
+  local.get $0
+  local.get $0
+  i64.const 33
+  i64.shr_u
+  i64.xor
+  local.set $0
+  local.get $0
+ )
+ (func $~lib/math/splitMix32 (param $0 i32) (result i32)
+  local.get $0
+  i32.const 1831565813
+  i32.add
+  local.set $0
+  local.get $0
+  local.get $0
+  i32.const 15
+  i32.shr_u
+  i32.xor
+  local.get $0
+  i32.const 1
+  i32.or
+  i32.mul
+  local.set $0
+  local.get $0
+  local.get $0
+  local.get $0
+  local.get $0
+  i32.const 7
+  i32.shr_u
+  i32.xor
+  local.get $0
+  i32.const 61
+  i32.or
+  i32.mul
+  i32.add
+  i32.xor
+  local.set $0
+  local.get $0
+  local.get $0
+  i32.const 14
+  i32.shr_u
+  i32.xor
+ )
+ (func $~lib/math/NativeMath.seedRandom (param $0 i64)
+  i32.const 1
+  global.set $~lib/math/random_seeded
+  local.get $0
+  call $~lib/math/murmurHash3
+  global.set $~lib/math/random_state0_64
+  global.get $~lib/math/random_state0_64
+  i64.const -1
+  i64.xor
+  call $~lib/math/murmurHash3
+  global.set $~lib/math/random_state1_64
+  local.get $0
+  i32.wrap_i64
+  call $~lib/math/splitMix32
+  global.set $~lib/math/random_state0_32
+  global.get $~lib/math/random_state0_32
+  call $~lib/math/splitMix32
+  global.set $~lib/math/random_state1_32
+  global.get $~lib/math/random_state0_64
+  i64.const 0
+  i64.ne
+  if (result i32)
+   global.get $~lib/math/random_state1_64
+   i64.const 0
+   i64.ne
+  else
+   i32.const 0
+  end
+  if (result i32)
+   global.get $~lib/math/random_state0_32
+   i32.const 0
+   i32.ne
+  else
+   i32.const 0
+  end
+  if (result i32)
+   global.get $~lib/math/random_state1_32
+   i32.const 0
+   i32.ne
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 0
+   i32.const 384
+   i32.const 1399
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+ )
+ (func $~lib/math/NativeMathf.random (result f32)
+  (local $0 i64)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  global.get $~lib/math/random_seeded
+  i32.eqz
+  if
+   call $~lib/builtins/seed
+   i64.reinterpret_f64
+   local.set $0
+   local.get $0
+   call $~lib/math/NativeMath.seedRandom
+  end
+  global.get $~lib/math/random_state0_32
+  local.set $1
+  global.get $~lib/math/random_state1_32
+  local.set $2
+  local.get $1
+  i32.const -1640531525
+  i32.mul
+  i32.const 5
+  i32.rotl
+  i32.const 5
+  i32.mul
+  local.set $3
+  local.get $2
+  local.get $1
+  i32.xor
+  local.set $2
+  local.get $1
+  i32.const 26
+  i32.rotl
+  local.get $2
+  i32.xor
+  local.get $2
+  i32.const 9
+  i32.shl
+  i32.xor
+  global.set $~lib/math/random_state0_32
+  local.get $2
+  i32.const 13
+  i32.rotl
+  global.set $~lib/math/random_state1_32
   local.get $3
+  i32.const 9
+  i32.shr_u
+  i32.const 127
+  i32.const 23
+  i32.shl
+  i32.or
+  f32.reinterpret_i32
+  f32.const 1
+  f32.sub
+ )
+ (func $assembly/index/VectorXd.Random (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  i32.const 0
+  i32.const 2
+  i32.const 5
+  i32.const 352
+  call $~lib/rt/__newArray
+  call $~lib/rt/pure/__retain
+  local.set $2
+  i32.const 0
+  local.set $1
+  loop $for-loop|0
+   local.get $1
+   local.get $0
+   i32.lt_s
+   local.set $3
+   local.get $3
+   if
+    local.get $2
+    call $~lib/math/NativeMathf.random
+    call $~lib/array/Array<f32>#push
+    drop
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+  i32.const 0
+  local.get $2
+  call $assembly/index/VectorXd#constructor
+  local.set $1
+  local.get $2
   call $~lib/rt/pure/__release
   local.get $1
  )
- (func $~lib/array/Array<i32>#get:length (param $0 i32) (result i32)
-  local.get $0
-  i32.load offset=12
+ (func $start:assembly/index
+  global.get $assembly/index/num_vertices
+  i32.const 3
+  i32.mul
+  call $assembly/index/VectorXd.Zeros
+  global.set $assembly/index/q
+  global.get $assembly/index/num_vertices
+  i32.const 3
+  i32.mul
+  call $assembly/index/VectorXd.Zeros
+  global.set $assembly/index/qdot
+  global.get $assembly/index/num_vertices
+  i32.const 3
+  i32.mul
+  call $assembly/index/VectorXd.Random
+  global.set $assembly/index/acceleration
  )
- (func $~lib/array/Array<i32>#__uget (param $0 i32) (param $1 i32) (result i32)
+ (func $~lib/typedarray/Float32Array#get:length (param $0 i32) (result i32)
+  local.get $0
+  i32.load offset=8
+  i32.const 2
+  i32.shr_u
+ )
+ (func $~lib/typedarray/Float32Array#__get (param $0 i32) (param $1 i32) (result f32)
+  local.get $1
+  local.get $0
+  i32.load offset=8
+  i32.const 2
+  i32.shr_u
+  i32.ge_u
+  if
+   i32.const 464
+   i32.const 528
+   i32.const 1176
+   i32.const 64
+   call $~lib/builtins/abort
+   unreachable
+  end
   local.get $0
   i32.load offset=4
   local.get $1
   i32.const 2
   i32.shl
   i32.add
-  i32.load
+  f32.load
  )
- (func $~lib/array/Array<i32>#__get (param $0 i32) (param $1 i32) (result i32)
+ (func $assembly/index/initialize (param $0 i32)
+  (local $1 i32)
   (local $2 i32)
+  (local $3 i32)
+  local.get $0
+  call $~lib/rt/pure/__retain
+  local.set $0
+  i32.const 0
+  i32.const 2
+  i32.const 5
+  i32.const 432
+  call $~lib/rt/__newArray
+  call $~lib/rt/pure/__retain
+  local.set $2
+  i32.const 0
+  local.set $1
+  loop $for-loop|0
+   local.get $1
+   local.get $0
+   call $~lib/typedarray/Float32Array#get:length
+   i32.lt_s
+   local.set $3
+   local.get $3
+   if
+    local.get $2
+    local.get $0
+    local.get $1
+    call $~lib/typedarray/Float32Array#__get
+    call $~lib/array/Array<f32>#push
+    drop
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+  i32.const 0
+  local.get $2
+  call $assembly/index/VectorXd#constructor
+  local.set $3
+  global.get $assembly/index/q
+  call $~lib/rt/pure/__release
+  local.get $3
+  global.set $assembly/index/q
+  global.get $assembly/index/num_vertices
+  i32.const 3
+  i32.mul
+  call $assembly/index/VectorXd.Zeros
+  local.set $1
+  global.get $assembly/index/qdot
+  call $~lib/rt/pure/__release
+  local.get $1
+  global.set $assembly/index/qdot
+  local.get $2
+  call $~lib/rt/pure/__release
+  local.get $0
+  call $~lib/rt/pure/__release
+ )
+ (func $~lib/array/Array<f32>#get:length (param $0 i32) (result i32)
+  local.get $0
+  i32.load offset=12
+ )
+ (func $assembly/index/VectorXd#get:size (param $0 i32) (result i32)
+  local.get $0
+  i32.load
+  call $~lib/array/Array<f32>#get:length
+ )
+ (func $~lib/array/Array<f32>#__uget (param $0 i32) (param $1 i32) (result f32)
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  i32.const 2
+  i32.shl
+  i32.add
+  f32.load
+ )
+ (func $~lib/array/Array<f32>#__get (param $0 i32) (param $1 i32) (result f32)
+  (local $2 f32)
   local.get $1
   local.get $0
   i32.load offset=12
   i32.ge_u
   if
-   i32.const 384
+   i32.const 464
    i32.const 304
    i32.const 104
    i32.const 42
@@ -3535,351 +3783,42 @@
   end
   local.get $0
   local.get $1
-  call $~lib/array/Array<i32>#__uget
+  call $~lib/array/Array<f32>#__uget
   local.set $2
   i32.const 0
   drop
   local.get $2
  )
- (func $assembly/index/MatrixXd.Zeros (param $0 i32) (result i32)
-  (local $1 i32)
+ (func $assembly/index/VectorXd#muls (param $0 i32) (param $1 f32) (result i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
-  local.get $0
-  call $~lib/rt/pure/__retain
-  local.set $0
-  i32.const 1
-  local.set $1
   i32.const 0
-  local.set $2
-  loop $for-loop|0
-   local.get $2
-   local.get $0
-   call $~lib/array/Array<i32>#get:length
-   i32.lt_s
-   local.set $3
-   local.get $3
-   if
-    local.get $1
-    local.get $0
-    local.get $2
-    call $~lib/array/Array<i32>#__get
-    i32.mul
-    local.set $1
-    local.get $2
-    i32.const 1
-    i32.add
-    local.set $2
-    br $for-loop|0
-   end
-  end
-  i32.const 0
-  i32.const 3
-  i32.const 4
-  i32.const 448
+  i32.const 2
+  i32.const 5
+  i32.const 592
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $3
   i32.const 0
   local.set $2
-  loop $for-loop|1
+  loop $for-loop|0
    local.get $2
-   local.get $1
+   local.get $0
+   call $assembly/index/VectorXd#get:size
    i32.lt_s
    local.set $4
    local.get $4
    if
     local.get $3
-    f64.const 0
-    call $~lib/array/Array<f64>#push
-    drop
-    local.get $2
-    i32.const 1
-    i32.add
-    local.set $2
-    br $for-loop|1
-   end
-  end
-  i32.const 0
-  local.get $3
-  local.get $0
-  call $assembly/index/MatrixXd#constructor
-  local.set $2
-  local.get $3
-  call $~lib/rt/pure/__release
-  local.get $0
-  call $~lib/rt/pure/__release
-  local.get $2
- )
- (func $assembly/index/MatrixXd.Ones (param $0 i32) (result i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  local.get $0
-  call $~lib/rt/pure/__retain
-  local.set $0
-  i32.const 1
-  local.set $1
-  i32.const 0
-  local.set $2
-  loop $for-loop|0
-   local.get $2
-   local.get $0
-   call $~lib/array/Array<i32>#get:length
-   i32.lt_s
-   local.set $3
-   local.get $3
-   if
-    local.get $1
-    local.get $0
-    local.get $2
-    call $~lib/array/Array<i32>#__get
-    i32.mul
-    local.set $1
-    local.get $2
-    i32.const 1
-    i32.add
-    local.set $2
-    br $for-loop|0
-   end
-  end
-  i32.const 0
-  i32.const 3
-  i32.const 4
-  i32.const 512
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.set $3
-  i32.const 0
-  local.set $2
-  loop $for-loop|1
-   local.get $2
-   local.get $1
-   i32.lt_s
-   local.set $4
-   local.get $4
-   if
-    local.get $3
-    f64.const 1
-    call $~lib/array/Array<f64>#push
-    drop
-    local.get $2
-    i32.const 1
-    i32.add
-    local.set $2
-    br $for-loop|1
-   end
-  end
-  i32.const 0
-  local.get $3
-  local.get $0
-  call $assembly/index/MatrixXd#constructor
-  local.set $2
-  local.get $3
-  call $~lib/rt/pure/__release
-  local.get $0
-  call $~lib/rt/pure/__release
-  local.get $2
- )
- (func $assembly/index/VectorXd#constructor (param $0 i32) (param $1 i32) (result i32)
-  local.get $0
-  i32.eqz
-  if
-   i32.const 4
-   i32.const 6
-   call $~lib/rt/pure/__new
-   call $~lib/rt/pure/__retain
-   local.set $0
-  end
-  local.get $0
-  local.get $1
-  call $~lib/rt/pure/__retain
-  i32.store
-  local.get $1
-  call $~lib/rt/pure/__retain
-  local.set $1
-  local.get $1
-  call $~lib/rt/pure/__release
-  local.get $0
- )
- (func $start:assembly/index
-  (local $0 i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  (local $6 i32)
-  (local $7 i32)
-  i32.const 2
-  call $assembly/index/MatrixXd.Identity
-  global.set $assembly/index/i2
-  i32.const 2
-  i32.const 2
-  i32.const 5
-  i32.const 352
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.tee $1
-  call $assembly/index/MatrixXd.Zeros
-  global.set $assembly/index/m0
-  i32.const 2
-  i32.const 2
-  i32.const 5
-  i32.const 480
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.tee $2
-  call $assembly/index/MatrixXd.Ones
-  global.set $assembly/index/m1
-  i32.const 0
-  i32.const 4
-  i32.const 3
-  i32.const 4
-  i32.const 544
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.tee $3
-  i32.const 2
-  i32.const 2
-  i32.const 5
-  i32.const 608
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.tee $4
-  call $assembly/index/MatrixXd#constructor
-  global.set $assembly/index/m2
-  i32.const 0
-  i32.const 4
-  i32.const 3
-  i32.const 4
-  i32.const 640
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.tee $5
-  i32.const 2
-  i32.const 2
-  i32.const 5
-  i32.const 704
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.tee $6
-  call $assembly/index/MatrixXd#constructor
-  global.set $assembly/index/m3
-  i32.const 0
-  i32.const 2
-  i32.const 3
-  i32.const 4
-  i32.const 736
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.tee $7
-  call $assembly/index/VectorXd#constructor
-  global.set $assembly/index/v1
-  local.get $1
-  call $~lib/rt/pure/__release
-  local.get $2
-  call $~lib/rt/pure/__release
-  local.get $3
-  call $~lib/rt/pure/__release
-  local.get $4
-  call $~lib/rt/pure/__release
-  local.get $5
-  call $~lib/rt/pure/__release
-  local.get $6
-  call $~lib/rt/pure/__release
-  local.get $7
-  call $~lib/rt/pure/__release
- )
- (func $assembly/index/MatrixXd#get:data (param $0 i32) (result i32)
-  local.get $0
-  i32.load
-  call $~lib/rt/pure/__retain
- )
- (func $assembly/index/MatrixXd#set:data (param $0 i32) (param $1 i32)
-  (local $2 i32)
-  local.get $0
-  local.get $1
-  local.get $0
-  i32.load
-  local.tee $2
-  i32.ne
-  if
-   local.get $1
-   call $~lib/rt/pure/__retain
-   drop
-   local.get $2
-   call $~lib/rt/pure/__release
-  end
-  local.get $1
-  i32.store
- )
- (func $assembly/index/MatrixXd#get:shape (param $0 i32) (result i32)
-  local.get $0
-  i32.load offset=4
-  call $~lib/rt/pure/__retain
- )
- (func $assembly/index/MatrixXd#set:shape (param $0 i32) (param $1 i32)
-  (local $2 i32)
-  local.get $0
-  local.get $1
-  local.get $0
-  i32.load offset=4
-  local.tee $2
-  i32.ne
-  if
-   local.get $1
-   call $~lib/rt/pure/__retain
-   drop
-   local.get $2
-   call $~lib/rt/pure/__release
-  end
-  local.get $1
-  i32.store offset=4
- )
- (func $~lib/array/Array<f64>#get:length (param $0 i32) (result i32)
-  local.get $0
-  i32.load offset=12
- )
- (func $assembly/index/MatrixXd#get:size (param $0 i32) (result i32)
-  local.get $0
-  i32.load
-  call $~lib/array/Array<f64>#get:length
- )
- (func $~lib/array/Array<f64>#__uget (param $0 i32) (param $1 i32) (result f64)
-  local.get $0
-  i32.load offset=4
-  local.get $1
-  i32.const 3
-  i32.shl
-  i32.add
-  f64.load
- )
- (func $assembly/index/MatrixXd#sum (param $0 i32) (result f64)
-  (local $1 f64)
-  (local $2 i32)
-  (local $3 i32)
-  f64.const 0
-  local.set $1
-  i32.const 0
-  local.set $2
-  loop $for-loop|0
-   local.get $2
-   local.get $0
-   call $assembly/index/MatrixXd#get:size
-   i32.lt_s
-   local.set $3
-   local.get $3
-   if
-    local.get $1
     local.get $0
     i32.load
     local.get $2
-    call $~lib/array/Array<f64>#__uget
-    f64.add
-    local.set $1
+    call $~lib/array/Array<f32>#__get
+    local.get $1
+    f32.mul
+    call $~lib/array/Array<f32>#push
+    drop
     local.get $2
     i32.const 1
     i32.add
@@ -3887,216 +3826,82 @@
     br $for-loop|0
    end
   end
-  local.get $1
+  i32.const 0
+  local.get $3
+  call $assembly/index/VectorXd#constructor
+  local.set $2
+  local.get $3
+  call $~lib/rt/pure/__release
+  local.get $2
  )
- (func $~lib/array/Array<f64>#slice (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $assembly/index/VectorXd#addv (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
   (local $3 i32)
   (local $4 i32)
-  (local $5 i32)
-  (local $6 i32)
-  (local $7 i32)
-  (local $8 i32)
-  local.get $0
-  i32.load offset=12
-  local.set $3
   local.get $1
-  i32.const 0
-  i32.lt_s
-  if (result i32)
-   local.get $1
-   local.get $3
-   i32.add
-   local.tee $4
-   i32.const 0
-   local.tee $5
-   local.get $4
-   local.get $5
-   i32.gt_s
-   select
-  else
-   local.get $1
-   local.tee $5
-   local.get $3
-   local.tee $4
-   local.get $5
-   local.get $4
-   i32.lt_s
-   select
-  end
+  call $~lib/rt/pure/__retain
   local.set $1
-  local.get $2
-  i32.const 0
-  i32.lt_s
-  if (result i32)
-   local.get $2
-   local.get $3
-   i32.add
-   local.tee $4
-   i32.const 0
-   local.tee $5
-   local.get $4
-   local.get $5
-   i32.gt_s
-   select
-  else
-   local.get $2
-   local.tee $5
-   local.get $3
-   local.tee $4
-   local.get $5
-   local.get $4
-   i32.lt_s
-   select
-  end
-  local.set $2
-  local.get $2
+  local.get $0
+  call $assembly/index/VectorXd#get:size
   local.get $1
-  i32.sub
-  local.tee $4
+  call $assembly/index/VectorXd#get:size
+  i32.eq
+  i32.eqz
+  if
+   i32.const 624
+   i32.const 688
+   i32.const 57
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
   i32.const 0
-  local.tee $5
-  local.get $4
-  local.get $5
-  i32.gt_s
-  select
-  local.set $3
-  local.get $3
-  i32.const 3
-  i32.const 4
-  i32.const 0
+  i32.const 2
+  i32.const 5
+  i32.const 752
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
-  local.set $6
-  local.get $6
-  i32.load offset=4
-  local.set $7
-  local.get $0
-  i32.load offset=4
-  local.get $1
-  i32.const 3
-  i32.shl
-  i32.add
-  local.set $8
-  i32.const 0
-  drop
-  local.get $7
-  local.get $8
-  local.get $3
-  i32.const 3
-  i32.shl
-  call $~lib/memory/memory.copy
-  local.get $6
- )
- (func $assembly/index/MatrixXd#row (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  local.get $0
-  i32.load offset=4
-  i32.const 0
-  call $~lib/array/Array<i32>#__get
-  local.set $2
-  local.get $0
-  i32.load offset=4
-  i32.const 1
-  call $~lib/array/Array<i32>#__get
   local.set $3
-  local.get $1
   i32.const 0
-  i32.ge_s
-  if (result i32)
-   local.get $1
+  local.set $2
+  loop $for-loop|0
    local.get $2
+   local.get $0
+   call $assembly/index/VectorXd#get:size
    i32.lt_s
-  else
-   i32.const 0
+   local.set $4
+   local.get $4
+   if
+    local.get $3
+    local.get $0
+    i32.load
+    local.get $2
+    call $~lib/array/Array<f32>#__get
+    local.get $1
+    i32.load
+    local.get $2
+    call $~lib/array/Array<f32>#__get
+    f32.add
+    call $~lib/array/Array<f32>#push
+    drop
+    local.get $2
+    i32.const 1
+    i32.add
+    local.set $2
+    br $for-loop|0
+   end
   end
-  i32.eqz
-  if
-   i32.const 0
-   i32.const 784
-   i32.const 133
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  i32.load
-  local.get $3
-  local.get $1
-  i32.mul
-  local.get $3
-  local.get $1
-  i32.const 1
-  i32.add
-  i32.mul
-  call $~lib/array/Array<f64>#slice
-  local.set $4
   i32.const 0
-  local.get $4
+  local.get $3
   call $assembly/index/VectorXd#constructor
-  local.set $5
-  local.get $4
-  call $~lib/rt/pure/__release
-  local.get $5
- )
- (func $assembly/index/MatrixXd#col (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  local.get $0
-  i32.load offset=4
-  i32.const 0
-  call $~lib/array/Array<i32>#__get
   local.set $2
-  local.get $0
-  i32.load offset=4
-  i32.const 1
-  call $~lib/array/Array<i32>#__get
-  local.set $3
-  local.get $1
-  i32.const 0
-  i32.ge_s
-  if (result i32)
-   local.get $1
-   local.get $3
-   i32.lt_s
-  else
-   i32.const 0
-  end
-  i32.eqz
-  if
-   i32.const 0
-   i32.const 784
-   i32.const 141
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  i32.load
-  local.get $2
-  local.get $1
-  i32.mul
-  local.get $2
-  local.get $1
-  i32.const 1
-  i32.add
-  i32.mul
-  call $~lib/array/Array<f64>#slice
-  local.set $4
-  i32.const 0
-  local.get $4
-  call $assembly/index/VectorXd#constructor
-  local.set $5
-  local.get $4
+  local.get $3
   call $~lib/rt/pure/__release
-  local.get $5
+  local.get $1
+  call $~lib/rt/pure/__release
+  local.get $2
  )
- (func $~lib/array/Array<f64>#constructor (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
+ (func $~lib/arraybuffer/ArrayBufferView#constructor (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
@@ -4104,8 +3909,8 @@
   local.get $0
   i32.eqz
   if
-   i32.const 16
-   i32.const 4
+   i32.const 12
+   i32.const 2
    call $~lib/rt/pure/__new
    call $~lib/rt/pure/__retain
    local.set $0
@@ -4119,33 +3924,29 @@
   local.get $0
   i32.const 0
   i32.store offset=8
-  local.get $0
-  i32.const 0
-  i32.store offset=12
   local.get $1
   i32.const 1073741820
-  i32.const 3
+  local.get $2
   i32.shr_u
   i32.gt_u
   if
    i32.const 256
-   i32.const 304
+   i32.const 784
+   i32.const 18
    i32.const 57
-   i32.const 60
    call $~lib/builtins/abort
    unreachable
   end
   local.get $1
-  i32.const 3
-  i32.shl
-  local.set $2
   local.get $2
+  i32.shl
+  local.tee $1
   i32.const 0
   call $~lib/rt/pure/__new
   local.set $3
   local.get $3
   i32.const 0
-  local.get $2
+  local.get $1
   call $~lib/memory/memory.fill
   local.get $0
   local.tee $4
@@ -4168,552 +3969,115 @@
   local.get $3
   i32.store offset=4
   local.get $0
-  local.get $2
+  local.get $1
   i32.store offset=8
   local.get $0
+ )
+ (func $~lib/typedarray/Float32Array#constructor (param $0 i32) (param $1 i32) (result i32)
+  local.get $0
+  i32.eqz
+  if
+   i32.const 12
+   i32.const 3
+   call $~lib/rt/pure/__new
+   call $~lib/rt/pure/__retain
+   local.set $0
+  end
+  local.get $0
   local.get $1
-  i32.store offset=12
+  i32.const 2
+  call $~lib/arraybuffer/ArrayBufferView#constructor
+  local.set $0
   local.get $0
  )
- (func $~lib/array/Array<f64>#__uset (param $0 i32) (param $1 i32) (param $2 f64)
-  i32.const 0
-  drop
+ (func $~lib/typedarray/Float32Array#__set (param $0 i32) (param $1 i32) (param $2 f32)
+  local.get $1
+  local.get $0
+  i32.load offset=8
+  i32.const 2
+  i32.shr_u
+  i32.ge_u
+  if
+   i32.const 464
+   i32.const 528
+   i32.const 1187
+   i32.const 64
+   call $~lib/builtins/abort
+   unreachable
+  end
   local.get $0
   i32.load offset=4
   local.get $1
-  i32.const 3
+  i32.const 2
   i32.shl
   i32.add
   local.get $2
-  f64.store
+  f32.store
  )
- (func $assembly/index/MatrixXd#constructor@varargs (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  block $2of2
-   block $1of2
-    block $0of2
-     block $outOfRange
-      global.get $~argumentsLength
-      br_table $0of2 $1of2 $2of2 $outOfRange
-     end
-     unreachable
-    end
-    i32.const 0
-    i32.const 3
-    i32.const 4
-    i32.const 848
-    call $~lib/rt/__newArray
-    call $~lib/rt/pure/__retain
-    local.tee $4
-    local.set $1
-   end
-   i32.const 1
-   i32.const 2
-   i32.const 5
-   i32.const 0
-   call $~lib/rt/__newArray
-   call $~lib/rt/pure/__retain
-   local.set $3
-   local.get $3
-   i32.load offset=4
-   local.set $5
-   local.get $5
-   local.get $1
-   call $~lib/array/Array<f64>#get:length
-   i32.store
-   local.get $3
-   local.tee $5
-   local.set $2
-  end
-  local.get $0
-  local.get $1
-  local.get $2
-  call $assembly/index/MatrixXd#constructor
-  local.set $3
-  local.get $4
-  call $~lib/rt/pure/__release
-  local.get $5
-  call $~lib/rt/pure/__release
-  local.get $3
- )
- (func $assembly/index/MatrixXd#addm (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  local.get $1
-  call $~lib/rt/pure/__retain
-  local.set $1
-  local.get $0
-  call $assembly/index/MatrixXd#get:size
-  local.get $1
-  call $assembly/index/MatrixXd#get:size
-  i32.eq
-  i32.eqz
-  if
-   i32.const 0
-   i32.const 784
-   i32.const 147
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  i32.const 0
-  local.get $0
-  call $assembly/index/MatrixXd#get:size
-  call $~lib/array/Array<f64>#constructor
-  local.set $2
-  i32.const 0
-  local.set $3
-  loop $for-loop|0
-   local.get $3
-   local.get $0
-   call $assembly/index/MatrixXd#get:size
-   i32.lt_s
-   local.set $4
-   local.get $4
-   if
-    local.get $2
-    local.get $3
-    local.get $0
-    i32.load
-    local.get $3
-    call $~lib/array/Array<f64>#__uget
-    local.get $1
-    i32.load
-    local.get $3
-    call $~lib/array/Array<f64>#__uget
-    f64.add
-    call $~lib/array/Array<f64>#__uset
-    local.get $3
-    i32.const 1
-    i32.add
-    local.set $3
-    br $for-loop|0
-   end
-  end
-  i32.const 0
-  local.get $2
-  i32.const 1
-  global.set $~argumentsLength
-  i32.const 0
-  call $assembly/index/MatrixXd#constructor@varargs
-  local.set $3
-  local.get $2
-  call $~lib/rt/pure/__release
-  local.get $1
-  call $~lib/rt/pure/__release
-  local.get $3
- )
- (func $assembly/index/MatrixXd#subm (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  local.get $1
-  call $~lib/rt/pure/__retain
-  local.set $1
-  local.get $0
-  call $assembly/index/MatrixXd#get:size
-  local.get $1
-  call $assembly/index/MatrixXd#get:size
-  i32.eq
-  i32.eqz
-  if
-   i32.const 0
-   i32.const 784
-   i32.const 156
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  i32.const 0
-  local.get $0
-  call $assembly/index/MatrixXd#get:size
-  call $~lib/array/Array<f64>#constructor
-  local.set $2
-  i32.const 0
-  local.set $3
-  loop $for-loop|0
-   local.get $3
-   local.get $0
-   call $assembly/index/MatrixXd#get:size
-   i32.lt_s
-   local.set $4
-   local.get $4
-   if
-    local.get $2
-    local.get $3
-    local.get $0
-    i32.load
-    local.get $3
-    call $~lib/array/Array<f64>#__uget
-    local.get $1
-    i32.load
-    local.get $3
-    call $~lib/array/Array<f64>#__uget
-    f64.sub
-    call $~lib/array/Array<f64>#__uset
-    local.get $3
-    i32.const 1
-    i32.add
-    local.set $3
-    br $for-loop|0
-   end
-  end
-  i32.const 0
-  local.get $2
-  i32.const 1
-  global.set $~argumentsLength
-  i32.const 0
-  call $assembly/index/MatrixXd#constructor@varargs
-  local.set $3
-  local.get $2
-  call $~lib/rt/pure/__release
-  local.get $1
-  call $~lib/rt/pure/__release
-  local.get $3
- )
- (func $assembly/index/VectorXd#get:size (param $0 i32) (result i32)
-  local.get $0
-  i32.load
-  call $~lib/array/Array<f64>#get:length
- )
- (func $~lib/array/Array<f64>#__get (param $0 i32) (param $1 i32) (result f64)
-  (local $2 f64)
-  local.get $1
-  local.get $0
-  i32.load offset=12
-  i32.ge_u
-  if
-   i32.const 384
-   i32.const 304
-   i32.const 104
-   i32.const 42
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  local.get $1
-  call $~lib/array/Array<f64>#__uget
-  local.set $2
-  i32.const 0
-  drop
-  local.get $2
- )
- (func $assembly/index/VectorXd#dot (param $0 i32) (param $1 i32) (result f64)
-  (local $2 f64)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 f64)
-  local.get $1
-  call $~lib/rt/pure/__retain
-  local.set $1
-  local.get $0
-  call $assembly/index/VectorXd#get:size
-  local.get $1
-  call $assembly/index/VectorXd#get:size
-  i32.eq
-  i32.eqz
-  if
-   i32.const 880
-   i32.const 784
-   i32.const 56
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  f64.const 0
-  local.set $2
-  i32.const 0
-  local.set $3
-  loop $for-loop|0
-   local.get $3
-   local.get $0
-   call $assembly/index/VectorXd#get:size
-   i32.lt_s
-   local.set $4
-   local.get $4
-   if
-    local.get $2
-    local.get $0
-    i32.load
-    local.get $3
-    call $~lib/array/Array<f64>#__get
-    local.get $1
-    i32.load
-    local.get $3
-    call $~lib/array/Array<f64>#__get
-    f64.mul
-    f64.add
-    local.set $2
-    local.get $3
-    i32.const 1
-    i32.add
-    local.set $3
-    br $for-loop|0
-   end
-  end
-  local.get $2
-  local.set $5
-  local.get $1
-  call $~lib/rt/pure/__release
-  local.get $5
- )
- (func $assembly/index/MatrixXd#mulm (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  (local $6 i32)
-  (local $7 i32)
-  (local $8 i32)
-  (local $9 i32)
-  (local $10 i32)
-  (local $11 i32)
-  (local $12 i32)
-  local.get $1
-  call $~lib/rt/pure/__retain
-  local.set $1
-  local.get $0
-  i32.load offset=4
-  i32.const 1
-  call $~lib/array/Array<i32>#__get
-  local.get $1
-  i32.load offset=4
-  i32.const 0
-  call $~lib/array/Array<i32>#__get
-  i32.eq
-  i32.eqz
-  if
-   i32.const 880
-   i32.const 784
-   i32.const 165
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  i32.load offset=4
-  i32.const 0
-  call $~lib/array/Array<i32>#__get
-  local.set $2
-  local.get $0
-  i32.load offset=4
-  i32.const 1
-  call $~lib/array/Array<i32>#__get
-  local.set $3
-  i32.const 2
-  i32.const 2
-  i32.const 5
-  i32.const 0
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.set $4
-  local.get $4
-  i32.load offset=4
-  local.set $5
-  local.get $5
-  local.get $2
-  i32.store
-  local.get $5
-  local.get $3
-  i32.store offset=4
-  local.get $4
-  local.set $5
-  local.get $2
-  local.get $3
-  i32.mul
-  local.set $4
-  i32.const 0
-  i32.const 3
-  i32.const 4
-  i32.const 944
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.set $7
-  i32.const 0
-  local.set $6
-  loop $for-loop|0
-   local.get $6
-   local.get $2
-   i32.lt_s
-   local.set $8
-   local.get $8
-   if
-    i32.const 0
-    local.set $9
-    loop $for-loop|1
-     local.get $9
-     local.get $3
-     i32.lt_s
-     local.set $10
-     local.get $10
-     if
-      local.get $0
-      local.get $6
-      call $assembly/index/MatrixXd#row
-      local.set $11
-      local.get $1
-      local.get $9
-      call $assembly/index/MatrixXd#col
-      local.set $12
-      local.get $7
-      local.get $11
-      local.get $12
-      call $assembly/index/VectorXd#dot
-      call $~lib/array/Array<f64>#push
-      drop
-      local.get $11
-      call $~lib/rt/pure/__release
-      local.get $12
-      call $~lib/rt/pure/__release
-      local.get $9
-      i32.const 1
-      i32.add
-      local.set $9
-      br $for-loop|1
-     end
-    end
-    local.get $6
-    i32.const 1
-    i32.add
-    local.set $6
-    br $for-loop|0
-   end
-  end
-  i32.const 0
-  local.get $7
-  local.get $5
-  call $assembly/index/MatrixXd#constructor
-  local.set $6
-  local.get $5
-  call $~lib/rt/pure/__release
-  local.get $7
-  call $~lib/rt/pure/__release
-  local.get $1
-  call $~lib/rt/pure/__release
-  local.get $6
- )
- (func $assembly/index/VectorXd#get:shape (param $0 i32) (result i32)
+ (func $assembly/index/integrate (param $0 f32) (result i32)
   (local $1 i32)
   (local $2 i32)
-  i32.const 1
-  i32.const 2
-  i32.const 5
-  i32.const 0
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.set $1
-  local.get $1
-  i32.load offset=4
-  local.set $2
-  local.get $2
-  local.get $0
-  i32.load
-  call $~lib/array/Array<f64>#get:length
-  i32.store
-  local.get $1
- )
- (func $assembly/index/MatrixXd#mulv (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
-  (local $6 i32)
-  (local $7 i32)
-  (local $8 i32)
-  local.get $1
-  call $~lib/rt/pure/__retain
-  local.set $1
+  global.get $assembly/index/qdot
+  global.get $assembly/index/acceleration
   local.get $0
-  i32.load offset=4
-  i32.const 1
-  call $~lib/array/Array<i32>#__get
-  local.get $1
-  call $assembly/index/VectorXd#get:shape
+  call $assembly/index/VectorXd#muls
+  local.tee $1
+  call $assembly/index/VectorXd#addv
+  local.set $2
+  global.get $assembly/index/qdot
+  call $~lib/rt/pure/__release
+  local.get $2
+  global.set $assembly/index/qdot
+  global.get $assembly/index/q
+  global.get $assembly/index/qdot
+  local.get $0
+  call $assembly/index/VectorXd#muls
   local.tee $2
-  i32.const 0
-  call $~lib/array/Array<i32>#__get
-  i32.eq
-  i32.eqz
-  if
-   i32.const 880
-   i32.const 784
-   i32.const 182
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  i32.load offset=4
-  i32.const 0
-  call $~lib/array/Array<i32>#__get
+  call $assembly/index/VectorXd#addv
   local.set $3
-  local.get $0
-  i32.load offset=4
-  i32.const 1
-  call $~lib/array/Array<i32>#__get
+  global.get $assembly/index/q
+  call $~lib/rt/pure/__release
+  local.get $3
+  global.set $assembly/index/q
+  i32.const 0
+  global.get $assembly/index/q
+  call $assembly/index/VectorXd#get:size
+  call $~lib/typedarray/Float32Array#constructor
+  local.set $3
+  i32.const 0
   local.set $4
-  i32.const 0
-  i32.const 3
-  i32.const 4
-  i32.const 976
-  call $~lib/rt/__newArray
-  call $~lib/rt/pure/__retain
-  local.set $6
-  i32.const 0
-  local.set $5
   loop $for-loop|0
-   local.get $5
-   local.get $3
+   local.get $4
+   global.get $assembly/index/q
+   call $assembly/index/VectorXd#get:size
    i32.lt_s
-   local.set $7
-   local.get $7
+   local.set $5
+   local.get $5
    if
-    local.get $0
-    local.get $5
-    call $assembly/index/MatrixXd#row
-    local.set $8
-    local.get $6
-    local.get $8
-    local.get $1
-    call $assembly/index/VectorXd#dot
-    call $~lib/array/Array<f64>#push
-    drop
-    local.get $8
-    call $~lib/rt/pure/__release
-    local.get $5
+    local.get $3
+    local.get $4
+    global.get $assembly/index/q
+    i32.load
+    local.get $4
+    call $~lib/array/Array<f32>#__get
+    call $~lib/typedarray/Float32Array#__set
+    local.get $4
     i32.const 1
     i32.add
-    local.set $5
+    local.set $4
     br $for-loop|0
    end
   end
-  i32.const 0
-  local.get $6
-  call $assembly/index/VectorXd#constructor
-  local.set $5
+  local.get $3
+  local.set $4
+  local.get $1
+  call $~lib/rt/pure/__release
   local.get $2
   call $~lib/rt/pure/__release
-  local.get $6
-  call $~lib/rt/pure/__release
-  local.get $1
-  call $~lib/rt/pure/__release
-  local.get $5
- )
- (func $assembly/index/compute (result f64)
-  (local $0 i32)
-  (local $1 f64)
-  global.get $assembly/index/m2
-  global.get $assembly/index/m3
-  call $assembly/index/MatrixXd#mulm
-  local.tee $0
-  call $assembly/index/MatrixXd#sum
-  local.set $1
-  local.get $0
-  call $~lib/rt/pure/__release
-  local.get $1
+  local.get $4
  )
  (func $~start
   call $start:assembly/index
@@ -4856,7 +4220,12 @@
    call $~lib/rt/pure/__visit
   end
  )
- (func $assembly/index/MatrixXd~visit (param $0 i32) (param $1 i32)
+ (func $~lib/typedarray/Float32Array~visit (param $0 i32) (param $1 i32)
+  local.get $0
+  local.get $1
+  call $~lib/arraybuffer/ArrayBufferView~visit
+ )
+ (func $assembly/index/VectorXd~visit (param $0 i32) (param $1 i32)
   (local $2 i32)
   local.get $0
   i32.load
@@ -4866,16 +4235,8 @@
    local.get $1
    call $~lib/rt/pure/__visit
   end
-  local.get $0
-  i32.load offset=4
-  local.tee $2
-  if
-   local.get $2
-   local.get $1
-   call $~lib/rt/pure/__visit
-  end
  )
- (func $~lib/array/Array<f64>#__visit (param $0 i32) (param $1 i32)
+ (func $~lib/array/Array<f32>#__visit (param $0 i32) (param $1 i32)
   i32.const 0
   drop
   local.get $0
@@ -4883,10 +4244,10 @@
   local.get $1
   call $~lib/rt/pure/__visit
  )
- (func $~lib/array/Array<f64>~visit (param $0 i32) (param $1 i32)
+ (func $~lib/array/Array<f32>~visit (param $0 i32) (param $1 i32)
   local.get $0
   local.get $1
-  call $~lib/array/Array<f64>#__visit
+  call $~lib/array/Array<f32>#__visit
  )
  (func $~lib/array/Array<i32>#__visit (param $0 i32) (param $1 i32)
   i32.const 0
@@ -4901,23 +4262,12 @@
   local.get $1
   call $~lib/array/Array<i32>#__visit
  )
- (func $assembly/index/VectorXd~visit (param $0 i32) (param $1 i32)
-  (local $2 i32)
-  local.get $0
-  i32.load
-  local.tee $2
-  if
-   local.get $2
-   local.get $1
-   call $~lib/rt/pure/__visit
-  end
- )
  (func $~lib/rt/__visit_members (param $0 i32) (param $1 i32)
   block $invalid
-   block $assembly/index/VectorXd
-    block $~lib/array/Array<i32>
-     block $~lib/array/Array<f64>
-      block $assembly/index/MatrixXd
+   block $~lib/array/Array<i32>
+    block $~lib/array/Array<f32>
+     block $assembly/index/VectorXd
+      block $~lib/typedarray/Float32Array
        block $~lib/arraybuffer/ArrayBufferView
         block $~lib/string/String
          block $~lib/arraybuffer/ArrayBuffer
@@ -4925,7 +4275,7 @@
           i32.const 8
           i32.sub
           i32.load
-          br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $assembly/index/MatrixXd $~lib/array/Array<f64> $~lib/array/Array<i32> $assembly/index/VectorXd $invalid
+          br_table $~lib/arraybuffer/ArrayBuffer $~lib/string/String $~lib/arraybuffer/ArrayBufferView $~lib/typedarray/Float32Array $assembly/index/VectorXd $~lib/array/Array<f32> $~lib/array/Array<i32> $invalid
          end
          local.get $0
          local.get $1
@@ -4944,28 +4294,24 @@
       end
       local.get $0
       local.get $1
-      call $assembly/index/MatrixXd~visit
+      call $~lib/typedarray/Float32Array~visit
       return
      end
      local.get $0
      local.get $1
-     call $~lib/array/Array<f64>~visit
+     call $assembly/index/VectorXd~visit
      return
     end
     local.get $0
     local.get $1
-    call $~lib/array/Array<i32>~visit
+    call $~lib/array/Array<f32>~visit
     return
    end
    local.get $0
    local.get $1
-   call $assembly/index/VectorXd~visit
+   call $~lib/array/Array<i32>~visit
    return
   end
   unreachable
- )
- (func $~setArgumentsLength (param $0 i32)
-  local.get $0
-  global.set $~argumentsLength
  )
 )
