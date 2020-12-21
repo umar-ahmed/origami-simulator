@@ -15,12 +15,12 @@ document.body.appendChild(renderer.domElement);
 
 {
   const light = new THREE.PointLight(0xffffff, 1);
-  light.position.set(0, 0, 0);
+  light.position.set(0, 10, 10);
   scene.add(light);
 }
 
 {
-  const light = new THREE.AmbientLight(0xffffff, 0.4);
+  const light = new THREE.AmbientLight(0xffffff, 0.6);
   scene.add(light);
 }
 
@@ -34,10 +34,10 @@ var controls = new OrbitControls(camera, renderer.domElement);
 
 // Setup geometry
 let vertices = new Float32Array([
-  ...[-1.0, -1.0, 0.0], // bottom left
-  ...[1.0, -1.0, 0.0], // bottom right
-  ...[1.0, 1.0, 0.0], // top right
-  ...[-1.0, 1.0, 0.0], // top left
+  ...[-1.0, 0.0, -1.0], // bottom left
+  ...[1.0, 0.0, -1.0], // bottom right
+  ...[1.0, 0.0, 1.0], // top right
+  ...[-1.0, 0.0, 1.0], // top left
 ]);
 
 const edges = new Int32Array([
@@ -67,24 +67,43 @@ const positionAttribute = new THREE.BufferAttribute(vertices, 3);
 positionAttribute.setUsage(THREE.DynamicDrawUsage);
 
 // Add mesh
-const material = new THREE.MeshPhongMaterial({
+const frontMaterial = new THREE.MeshPhongMaterial({
   flatShading: true,
-  color: 0xffffff,
-  side: THREE.DoubleSide,
+  color: 0xdddddd,
+  side: THREE.FrontSide,
   polygonOffset: true,
   polygonOffsetFactor: 0.5, // positive value pushes polygon further away
   polygonOffsetUnits: 1,
 });
-const mesh = new THREE.Mesh(new THREE.BufferGeometry(), material);
-mesh.geometry.setAttribute("position", positionAttribute);
-mesh.geometry.setIndex([
+const frontMesh = new THREE.Mesh(new THREE.BufferGeometry(), frontMaterial);
+frontMesh.geometry.setAttribute("position", positionAttribute);
+frontMesh.geometry.setIndex([
   ...[0, 1, 2], // bottom right
   ...[2, 3, 0], // top left
 ]);
-mesh.geometry.computeFaceNormals();
-mesh.geometry.computeBoundingBox();
-mesh.geometry.computeBoundingSphere();
-scene.add(mesh);
+frontMesh.geometry.computeFaceNormals();
+frontMesh.geometry.computeBoundingBox();
+frontMesh.geometry.computeBoundingSphere();
+scene.add(frontMesh);
+
+const backMaterial = new THREE.MeshPhongMaterial({
+  flatShading: true,
+  color: 0xec008b,
+  side: THREE.BackSide,
+  polygonOffset: true,
+  polygonOffsetFactor: 0.5, // positive value pushes polygon further away
+  polygonOffsetUnits: 1,
+});
+const backMesh = new THREE.Mesh(new THREE.BufferGeometry(), backMaterial);
+backMesh.geometry.setAttribute("position", positionAttribute);
+backMesh.geometry.setIndex([
+  ...[0, 1, 2], // bottom right
+  ...[2, 3, 0], // top left
+]);
+backMesh.geometry.computeFaceNormals();
+backMesh.geometry.computeBoundingBox();
+backMesh.geometry.computeBoundingSphere();
+scene.add(backMesh);
 
 const lineMaterial = new THREE.LineBasicMaterial({
   color: 0x000000,

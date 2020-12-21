@@ -173,7 +173,6 @@ class VectorXd {
     return new VectorXd(newData);
   }
 }
-
 class VectorXi {
   public data: i32[] = [];
 
@@ -279,127 +278,6 @@ class VectorXi {
       newData.push(this.data[i] / scalar);
     }
     return new VectorXi(newData);
-  }
-}
-
-class MatrixXd {
-  constructor(
-    public data: Array<f32> = [],
-    public shape: Array<i32> = [data.length]
-  ) {}
-
-  static Zeros(shape: Array<i32>): MatrixXd {
-    let size = 1;
-    for (let i = 0; i < shape.length; i++) {
-      size *= shape[i];
-    }
-    let data: f32[] = [];
-    for (let i = 0; i < size; i++) {
-      data.push(0.0);
-    }
-    return new MatrixXd(data, shape);
-  }
-
-  static Ones(shape: Array<i32>): MatrixXd {
-    let size = 1;
-    for (let i = 0; i < shape.length; i++) {
-      size *= shape[i];
-    }
-    let data: f32[] = [];
-    for (let i = 0; i < size; i++) {
-      data.push(1.0);
-    }
-    return new MatrixXd(data, shape);
-  }
-
-  static Identity(size: i32): MatrixXd {
-    let shape = [size, size];
-    let data: f32[] = [];
-    for (let i = 0; i < size; i++) {
-      for (let j = 0; j < size; j++) {
-        if (i == j) {
-          data.push(1.0);
-        } else {
-          data.push(0.0);
-        }
-      }
-    }
-    return new MatrixXd(data, shape);
-  }
-
-  get size(): i32 {
-    return this.data.length;
-  }
-
-  sum(): f32 {
-    let total: f32 = 0;
-    for (let i = 0; i < this.size; i++) {
-      total += unchecked(this.data[i]);
-    }
-    return total;
-  }
-
-  row(index: i32): VectorXd {
-    const r = this.shape[0];
-    const c = this.shape[1];
-    assert(index >= 0 && index < r);
-    const data = this.data.slice(c * index, c * (index + 1));
-    return new VectorXd(data);
-  }
-
-  col(index: i32): VectorXd {
-    const r = this.shape[0];
-    const c = this.shape[1];
-    assert(index >= 0 && index < c);
-    const data = this.data.slice(r * index, r * (index + 1));
-    return new VectorXd(data);
-  }
-
-  addm(ref: MatrixXd): MatrixXd {
-    assert(this.size == ref.size);
-    const newData = new Array<f32>(this.size);
-    for (let i = 0; i < this.size; i++) {
-      unchecked((newData[i] = this.data[i] + ref.data[i]));
-    }
-    return new MatrixXd(newData);
-  }
-
-  subm(ref: MatrixXd): MatrixXd {
-    assert(this.size == ref.size);
-    const newData = new Array<f32>(this.size);
-    for (let i = 0; i < this.size; i++) {
-      unchecked((newData[i] = this.data[i] - ref.data[i]));
-    }
-    return new MatrixXd(newData);
-  }
-
-  mulm(ref: MatrixXd): MatrixXd {
-    assert(this.shape[1] == ref.shape[0], "incompatible shapes");
-    const r = this.shape[0];
-    const c = this.shape[1];
-    let newShape = [r, c];
-    let newSize = r * c;
-    const newData: f32[] = [];
-    for (let i = 0; i < r; i++) {
-      for (let j = 0; j < c; j++) {
-        const row = this.row(i);
-        const col = ref.col(j);
-        newData.push(row.dot(col));
-      }
-    }
-    return new MatrixXd(newData, newShape);
-  }
-
-  mulv(ref: VectorXd): VectorXd {
-    assert(this.shape[1] == ref.shape[0], "incompatible shapes");
-    const r = this.shape[0];
-    const c = this.shape[1];
-    const newData: f32[] = [];
-    for (let i = 0; i < r; i++) {
-      const row = this.row(i);
-      newData.push(row.dot(ref));
-    }
-    return new VectorXd(newData);
   }
 }
 
