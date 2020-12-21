@@ -10,12 +10,14 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "build": "yarn engine:build && parcel build index.html",
+    "start": "serve -p 3000 dist"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
+    "serve": "^11.3.2",
     "three": "^0.123.0",
     "wasm-engine": "workspace:./packages/wasm-engine"
   }
