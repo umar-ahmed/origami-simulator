@@ -1,6 +1,9 @@
 # Origami Simulator
 
-Based on this paper by Amanda Ghassaei: http://erikdemaine.org/papers/OrigamiSimulator_Origami7/paper.pdf
+![Simulator](teaser.png)
+
+- [Watch Video Explainer](https://www.youtube.com/watch?v=PYrkoNYMm6M)
+- Based on this paper by Amanda Ghassaei: http://erikdemaine.org/papers/OrigamiSimulator_Origami7/paper.pdf
 
 ## Prerequisites
 
