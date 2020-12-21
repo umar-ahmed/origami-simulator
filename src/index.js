@@ -38,6 +38,8 @@ let vertices = new Float32Array([
   ...[1.0, 0.0, -1.0], // bottom right
   ...[1.0, 0.0, 1.0], // top right
   ...[-1.0, 0.0, 1.0], // top left
+  ...[3.0, 0.0, -1.0], // bottom right
+  ...[3.0, 0.0, 1.0], // top right
 ]);
 
 const edges = new Int32Array([
@@ -46,15 +48,22 @@ const edges = new Int32Array([
   ...[2, 0], // diagonal
   ...[2, 3], // top
   ...[3, 0], // left
+  ...[1, 4], // bottom
+  ...[4, 5], // right
+  ...[2, 4], // diagonal
+  ...[2, 5], // top
 ]);
 
 const faces = new Int32Array([
   ...[0, 1, 2], // bottom right
   ...[2, 3, 0], // top left
+  ...[1, 4, 2], // bottom left
+  ...[2, 4, 5], // top right
 ]);
 
 const mountains = new Int32Array([
   ...[1, 3, 0, 2], // [p1, p2, p3, p4]
+  ...[5, 1, 4, 2], // [p1, p2, p3, p4]
 ]);
 
 // Set up dimensions
@@ -80,6 +89,8 @@ frontMesh.geometry.setAttribute("position", positionAttribute);
 frontMesh.geometry.setIndex([
   ...[0, 1, 2], // bottom right
   ...[2, 3, 0], // top left
+  ...[1, 4, 2], // bottom left
+  ...[2, 4, 5], // top right
 ]);
 frontMesh.geometry.computeFaceNormals();
 frontMesh.geometry.computeBoundingBox();
@@ -99,6 +110,8 @@ backMesh.geometry.setAttribute("position", positionAttribute);
 backMesh.geometry.setIndex([
   ...[0, 1, 2], // bottom right
   ...[2, 3, 0], // top left
+  ...[1, 4, 2], // bottom left
+  ...[2, 4, 5], // top right
 ]);
 backMesh.geometry.computeFaceNormals();
 backMesh.geometry.computeBoundingBox();
@@ -117,6 +130,10 @@ lines.geometry.setIndex([
   ...[2, 0], // diagonal
   ...[2, 3], // top
   ...[3, 0], // left
+  ...[1, 4], // bottom
+  ...[4, 5], // right
+  ...[2, 4], // diagonal
+  ...[2, 5], // top
 ]);
 lines.geometry.computeBoundingBox();
 lines.geometry.computeBoundingSphere();

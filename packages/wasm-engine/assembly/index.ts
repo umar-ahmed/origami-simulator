@@ -281,10 +281,10 @@ class VectorXi {
   }
 }
 
-const num_vertices: i32 = 4;
-const num_edges: i32 = 5;
-const num_faces: i32 = 2;
-const num_mountains: i32 = 1;
+const num_vertices: i32 = 6;
+const num_edges: i32 = 9;
+const num_faces: i32 = 4;
+const num_mountains: i32 = 2;
 
 // Simulation parameters
 const damping_ratio: f32 = 0.45;
