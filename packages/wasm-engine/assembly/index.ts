@@ -410,7 +410,7 @@ const num_mountains: i32 = 1;
 const damping_ratio: f32 = 0.45;
 const stiffness: f32 = 20;
 const k_fold: f32 = 0.7;
-const theta_target: f32 = -Mathf.PI / 4.0;
+const theta_target: f32 = Mathf.PI / 2.0;
 
 let vertices = VectorXd.Zeros(num_vertices * 3);
 let edges = VectorXi.Zeros(num_edges * 2);

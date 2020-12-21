@@ -69,7 +69,7 @@
  (global $assembly/index/k_fold f32 (f32.const 0.699999988079071))
  (global $~lib/math/NativeMath.PI f64 (f64.const 3.141592653589793))
  (global $~lib/math/NativeMathf.PI f32 (f32.const 3.1415927410125732))
- (global $assembly/index/theta_target f32 (f32.const -0.7853981852531433))
+ (global $assembly/index/theta_target f32 (f32.const 1.5707963705062866))
  (global $assembly/index/vertices (mut i32) (i32.const 0))
  (global $assembly/index/edges (mut i32) (i32.const 0))
  (global $assembly/index/faces (mut i32) (i32.const 0))
