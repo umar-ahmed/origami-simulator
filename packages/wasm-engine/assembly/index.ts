@@ -1,5 +1,9 @@
 // The entry file of your WebAssembly module.
 
+declare function logI(data: i32): void;
+declare function logF(data: f64): void;
+declare function logS(data: string): void;
+
 export const FLOAT32ARRAY_ID = idof<Float32Array>();
 export const INT32ARRAY_ID = idof<Int32Array>();
 
@@ -73,7 +77,7 @@ class VectorXd {
   }
 
   squaredNorm(): f32 {
-    return this.dot(this);
+    return Mathf.abs(this.dot(this));
   }
 
   norm(): f32 {
@@ -132,6 +136,24 @@ class VectorXd {
       total += this.data[i] * ref.data[i];
     }
     return total;
+  }
+
+  cross(ref: VectorXd): VectorXd {
+    assert(
+      this.size == 3 && ref.size == 3,
+      "cross product only works with 3-vectors"
+    );
+    const a1 = this.data[0];
+    const a2 = this.data[1];
+    const a3 = this.data[2];
+    const b1 = ref.data[0];
+    const b2 = ref.data[1];
+    const b3 = ref.data[2];
+    return new VectorXd([
+      a2 * b3 - a3 * b2,
+      a3 * b1 - a1 * b3,
+      a1 * b2 - a2 * b1,
+    ]);
   }
 
   muls(scalar: f32): VectorXd {
@@ -384,18 +406,25 @@ class MatrixXd {
 const num_vertices: i32 = 4;
 const num_edges: i32 = 5;
 const num_faces: i32 = 2;
-const damping_ratio: f32 = 0.02;
-const stiffness: f32 = 2;
+const num_mountains: i32 = 1;
+const damping_ratio: f32 = 0.45;
+const stiffness: f32 = 20;
+const k_fold: f32 = 0.7;
+const theta_target: f32 = -Mathf.PI / 4.0;
 
 let vertices = VectorXd.Zeros(num_vertices * 3);
 let edges = VectorXi.Zeros(num_edges * 2);
+let faces = VectorXi.Zeros(num_faces * 3);
+let mountains = VectorXi.Zeros(num_mountains * 4);
 
 let q = VectorXd.Zeros(num_vertices * 3);
 let qdot = VectorXd.Zeros(num_vertices * 3);
 
 export function initialize(
   verticesArray: Float32Array,
-  edgesArray: Int32Array
+  edgesArray: Int32Array,
+  facesArray: Int32Array,
+  mountainsArray: Int32Array
 ): void {
   // Copy data into vertices
   let verticesData: f32[] = [];
@@ -410,6 +439,20 @@ export function initialize(
     edgesData.push(edgesArray[i]);
   }
   edges = new VectorXi(edgesData);
+
+  // Copy data into faces
+  let facesData: i32[] = [];
+  for (let i = 0; i < facesArray.length; i++) {
+    facesData.push(facesArray[i]);
+  }
+  faces = new VectorXi(facesData);
+
+  // Copy data into mountains
+  let mountainsData: i32[] = [];
+  for (let i = 0; i < mountainsArray.length; i++) {
+    mountainsData.push(mountainsArray[i]);
+  }
+  mountains = new VectorXi(mountainsData);
 
   // Initialize generalized coordinates
   q = new VectorXd(vertices.data).addv(
@@ -457,8 +500,115 @@ function compute_axial_force(): VectorXd {
   return force;
 }
 
+function compute_height(a: VectorXd, b: VectorXd, c: VectorXd): f32 {
+  const A = c.subv(b).norm();
+  const B = b.subv(a).norm();
+  const C = a.subv(c).norm();
+  const P: f32 = A + B + C;
+  const S: f32 = P / 2;
+  assert(S > A && S > B && S > C, "Some side larger than semi-perimeter");
+  const area: f32 = Mathf.sqrt(S * (S - A) * (S - B) * (S - C));
+  return (2 * area) / B;
+}
+
 function compute_crease_force(): VectorXd {
-  return VectorXd.Zeros(num_vertices * 3);
+  let force = VectorXd.Zeros(num_vertices * 3);
+
+  // Add force contribution for each mountain crease to neighbouring vertices
+  for (let i = 0; i < num_mountains; i++) {
+    const p1Index = mountains.get(4 * i + 0);
+    const p2Index = mountains.get(4 * i + 1);
+    const p3Index = mountains.get(4 * i + 2);
+    const p4Index = mountains.get(4 * i + 3);
+
+    const p1 = q.segment(3, 3 * p1Index);
+    const p2 = q.segment(3, 3 * p2Index);
+    const p3 = q.segment(3, 3 * p3Index);
+    const p4 = q.segment(3, 3 * p4Index);
+
+    // Compute lengths of lever arms using Heron's formula and A = bh/2
+    const h1 = compute_height(p4, p3, p1);
+    const h2 = compute_height(p3, p4, p2);
+
+    // compute normals
+    const n1 = p4.subv(p1).cross(p3.subv(p1)).normalized();
+    const n2 = p3.subv(p2).cross(p4.subv(p2)).normalized();
+
+    // compute fold angle
+    const theta = Mathf.acos(n1.dot(n2));
+
+    // Compute angles of triangles
+    const alpha_4_31 = Mathf.acos(
+      p1.subv(p4).normalized().dot(p3.subv(p4).normalized())
+    );
+    const alpha_4_23 = Mathf.acos(
+      p3.subv(p4).normalized().dot(p2.subv(p4).normalized())
+    );
+    const alpha_3_14 = Mathf.acos(
+      p4.subv(p3).normalized().dot(p1.subv(p3).normalized())
+    );
+    const alpha_3_42 = Mathf.acos(
+      p2.subv(p3).normalized().dot(p4.subv(p3).normalized())
+    );
+
+    // Compute force
+    const l0 = p4.subv(p3).norm();
+    const k_crease = l0 * k_fold;
+    const f_p1 = n1.divs(h1).muls(-k_crease * (theta - theta_target));
+    const f_p2 = n2.divs(h2).muls(-k_crease * (theta - theta_target));
+    const f_p3 = n1
+      .divs(h1)
+      .muls(
+        -1.0 /
+          Mathf.tan(alpha_4_31) /
+          (1.0 / Mathf.tan(alpha_3_14) + 1.0 / Mathf.tan(alpha_4_31))
+      )
+      .addv(
+        n2
+          .divs(h2)
+          .muls(
+            -1.0 /
+              Mathf.tan(alpha_4_23) /
+              (1.0 / Mathf.tan(alpha_3_42) + 1.0 / Mathf.tan(alpha_4_23))
+          )
+      )
+      .muls(-k_crease * (theta - theta_target));
+    const f_p4 = n1
+      .divs(h1)
+      .muls(
+        -1.0 /
+          Mathf.tan(alpha_3_14) /
+          (1.0 / Mathf.tan(alpha_3_14) + 1.0 / Mathf.tan(alpha_4_31))
+      )
+      .addv(
+        n2
+          .divs(h2)
+          .muls(
+            -1.0 /
+              Mathf.tan(alpha_3_42) /
+              (1.0 / Mathf.tan(alpha_3_42) + 1.0 / Mathf.tan(alpha_4_23))
+          )
+      )
+      .muls(-k_crease * (theta - theta_target));
+
+    force.set(3 * p1Index + 0, force.get(3 * p1Index + 0) + f_p1.get(0));
+    force.set(3 * p1Index + 1, force.get(3 * p1Index + 1) + f_p1.get(1));
+    force.set(3 * p1Index + 2, force.get(3 * p1Index + 2) + f_p1.get(2));
+
+    force.set(3 * p2Index + 0, force.get(3 * p2Index + 0) + f_p2.get(0));
+    force.set(3 * p2Index + 1, force.get(3 * p2Index + 1) + f_p2.get(1));
+    force.set(3 * p2Index + 2, force.get(3 * p2Index + 2) + f_p2.get(2));
+
+    force.set(3 * p3Index + 0, force.get(3 * p3Index + 0) + f_p3.get(0));
+    force.set(3 * p3Index + 1, force.get(3 * p3Index + 1) + f_p3.get(1));
+    force.set(3 * p3Index + 2, force.get(3 * p3Index + 2) + f_p3.get(2));
+
+    force.set(3 * p4Index + 0, force.get(3 * p4Index + 0) + f_p4.get(0));
+    force.set(3 * p4Index + 1, force.get(3 * p4Index + 1) + f_p4.get(1));
+    force.set(3 * p4Index + 2, force.get(3 * p4Index + 2) + f_p4.get(2));
+  }
+
+  return force;
 }
 
 function compute_face_force(): VectorXd {

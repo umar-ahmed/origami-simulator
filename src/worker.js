@@ -3,6 +3,8 @@ import instantiateWasm from "wasm-engine";
 let wasm = null;
 let verticesRef = null;
 let edgesRef = null;
+let facesRef = null;
+let mountainsRef = null;
 
 // eslint-disable-next-line no-restricted-globals
 self.onmessage = (e) => {
@@ -32,7 +34,17 @@ self.onmessage = (e) => {
         wasm.exports.__newArray(wasm.exports.INT32ARRAY_ID, msg.edges)
       );
 
-      wasm.exports.initialize(verticesRef, edgesRef);
+      // Copy msg.faces array into the wasm instance, increase GC count
+      facesRef = wasm.exports.__retain(
+        wasm.exports.__newArray(wasm.exports.INT32ARRAY_ID, msg.faces)
+      );
+
+      // Copy msg.mountains array into the wasm instance, increase GC count
+      mountainsRef = wasm.exports.__retain(
+        wasm.exports.__newArray(wasm.exports.INT32ARRAY_ID, msg.mountains)
+      );
+
+      wasm.exports.initialize(verticesRef, edgesRef, facesRef, mountainsRef);
 
       self.postMessage({ type: "worker/initialized" });
       return;
@@ -42,7 +54,7 @@ self.onmessage = (e) => {
       if (!wasm) throw new Error("wasm module not ready yet");
 
       // Do the calculations in this thread synchronously
-      const resultRef = wasm.exports.integrate(0.1);
+      const resultRef = wasm.exports.integrate(0.01);
 
       // Copy result array from the wasm instance to our javascript runtime
       const vertices = wasm.exports.__getFloat32Array(resultRef);

@@ -10,13 +10,15 @@
  (type $i32_i32_f32_=>_none (func (param i32 i32 f32)))
  (type $i32_f32_=>_i32 (func (param i32 f32) (result i32)))
  (type $none_=>_none (func))
- (type $i32_=>_f32 (func (param i32) (result f32)))
+ (type $f32_=>_f32 (func (param f32) (result f32)))
  (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
+ (type $i32_=>_f32 (func (param i32) (result f32)))
  (type $i64_=>_none (func (param i64)))
  (type $i32_i32_i32_i32_=>_i32 (func (param i32 i32 i32 i32) (result i32)))
  (type $f32_=>_i32 (func (param f32) (result i32)))
  (type $i64_=>_i64 (func (param i64) (result i64)))
  (type $none_=>_f32 (func (result f32)))
+ (type $i32_i32_i32_=>_f32 (func (param i32 i32 i32) (result f32)))
  (type $none_=>_f64 (func (result f64)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (import "env" "seed" (func $~lib/builtins/seed (result f64)))
@@ -35,18 +37,23 @@
  (data (i32.const 524) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00$\00\00\00~\00l\00i\00b\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s\00\00\00\00\00\00\00\00\00")
  (data (i32.const 588) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
  (data (i32.const 620) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 652) ",\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\18\00\00\00~\00l\00i\00b\00/\00m\00a\00t\00h\00.\00t\00s\00\00\00\00\00")
- (data (i32.const 700) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 732) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 764) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00i\00n\00c\00o\00m\00p\00a\00t\00i\00b\00l\00e\00 \00s\00h\00a\00p\00e\00s\00\00\00\00\00\00\00")
- (data (i32.const 828) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\"\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00i\00n\00d\00e\00x\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 892) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 924) ",\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\1a\00\00\00i\00n\00v\00a\00l\00i\00d\00 \00r\00a\00n\00g\00e\00\00\00")
- (data (i32.const 972) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 1004) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 652) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 684) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 716) ",\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\18\00\00\00~\00l\00i\00b\00/\00m\00a\00t\00h\00.\00t\00s\00\00\00\00\00")
+ (data (i32.const 764) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 796) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 828) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00i\00n\00c\00o\00m\00p\00a\00t\00i\00b\00l\00e\00 \00s\00h\00a\00p\00e\00s\00\00\00\00\00\00\00")
+ (data (i32.const 892) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\"\00\00\00a\00s\00s\00e\00m\00b\00l\00y\00/\00i\00n\00d\00e\00x\00.\00t\00s\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 956) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 988) ",\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00\1a\00\00\00i\00n\00v\00a\00l\00i\00d\00 \00r\00a\00n\00g\00e\00\00\00")
  (data (i32.const 1036) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
- (data (i32.const 1068) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s\00\00\00\00\00\00\00")
- (data (i32.const 1136) "\t\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00!\19\00\00\02\00\00\00!\t\00\00\02\00\00\00 \00\00\00\00\00\00\00\"\19\00\00\00\00\00\00\"\t\00\00\00\00\00\00 \00\00\00\00\00\00\00")
+ (data (i32.const 1068) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 1100) "\1c\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 1132) "\\\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00H\00\00\00S\00o\00m\00e\00 \00s\00i\00d\00e\00 \00l\00a\00r\00g\00e\00r\00 \00t\00h\00a\00n\00 \00s\00e\00m\00i\00-\00p\00e\00r\00i\00m\00e\00t\00e\00r\00\00\00\00\00")
+ (data (i32.const 1228) "l\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00N\00\00\00c\00r\00o\00s\00s\00 \00p\00r\00o\00d\00u\00c\00t\00 \00o\00n\00l\00y\00 \00w\00o\00r\00k\00s\00 \00w\00i\00t\00h\00 \003\00-\00v\00e\00c\00t\00o\00r\00s\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+ (data (i32.const 1344) ")\15DNn\83\f9\a2\c0\dd4\f5\d1W\'\fcA\90C<\99\95b\dba\c5\bb\de\abcQ\fe")
+ (data (i32.const 1388) "<\00\00\00\01\00\00\00\00\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s\00\00\00\00\00\00\00")
+ (data (i32.const 1456) "\t\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00 \00\00\00\00\00\00\00!\19\00\00\02\00\00\00!\t\00\00\02\00\00\00 \00\00\00\00\00\00\00\"\19\00\00\00\00\00\00\"\t\00\00\00\00\00\00 \00\00\00\00\00\00\00")
  (table $0 1 funcref)
  (global $~lib/rt/tlsf/ROOT (mut i32) (i32.const 0))
  (global $~lib/ASC_LOW_MEMORY_LIMIT i32 (i32.const 0))
@@ -56,10 +63,17 @@
  (global $assembly/index/num_vertices i32 (i32.const 4))
  (global $assembly/index/num_edges i32 (i32.const 5))
  (global $assembly/index/num_faces i32 (i32.const 2))
- (global $assembly/index/damping_ratio f32 (f32.const 0.019999999552965164))
- (global $assembly/index/stiffness f32 (f32.const 2))
+ (global $assembly/index/num_mountains i32 (i32.const 1))
+ (global $assembly/index/damping_ratio f32 (f32.const 0.44999998807907104))
+ (global $assembly/index/stiffness f32 (f32.const 20))
+ (global $assembly/index/k_fold f32 (f32.const 0.699999988079071))
+ (global $~lib/math/NativeMath.PI f64 (f64.const 3.141592653589793))
+ (global $~lib/math/NativeMathf.PI f32 (f32.const 3.1415927410125732))
+ (global $assembly/index/theta_target f32 (f32.const -0.7853981852531433))
  (global $assembly/index/vertices (mut i32) (i32.const 0))
  (global $assembly/index/edges (mut i32) (i32.const 0))
+ (global $assembly/index/faces (mut i32) (i32.const 0))
+ (global $assembly/index/mountains (mut i32) (i32.const 0))
  (global $assembly/index/q (mut i32) (i32.const 0))
  (global $assembly/index/qdot (mut i32) (i32.const 0))
  (global $~lib/math/random_seeded (mut i32) (i32.const 0))
@@ -67,8 +81,9 @@
  (global $~lib/math/random_state1_64 (mut i64) (i64.const 0))
  (global $~lib/math/random_state0_32 (mut i32) (i32.const 0))
  (global $~lib/math/random_state1_32 (mut i32) (i32.const 0))
- (global $~lib/rt/__rtti_base i32 (i32.const 1136))
- (global $~lib/memory/__heap_base i32 (i32.const 1212))
+ (global $~lib/math/rempio2f_y (mut f64) (f64.const 0))
+ (global $~lib/rt/__rtti_base i32 (i32.const 1456))
+ (global $~lib/memory/__heap_base i32 (i32.const 1532))
  (export "memory" (memory $0))
  (export "__new" (func $~lib/rt/pure/__new))
  (export "__renew" (func $~lib/rt/pure/__renew))
@@ -3680,6 +3695,16 @@
   i32.mul
   call $assembly/index/VectorXi.Zeros
   global.set $assembly/index/edges
+  global.get $assembly/index/num_faces
+  i32.const 3
+  i32.mul
+  call $assembly/index/VectorXi.Zeros
+  global.set $assembly/index/faces
+  global.get $assembly/index/num_mountains
+  i32.const 4
+  i32.mul
+  call $assembly/index/VectorXi.Zeros
+  global.set $assembly/index/mountains
   global.get $assembly/index/num_vertices
   i32.const 3
   i32.mul
@@ -3858,7 +3883,7 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 672
+   i32.const 736
    i32.const 1399
    i32.const 5
    call $~lib/builtins/abort
@@ -3927,7 +3952,7 @@
   i32.const 0
   i32.const 2
   i32.const 6
-  i32.const 640
+  i32.const 704
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $2
@@ -3971,7 +3996,7 @@
   i32.const 0
   i32.const 2
   i32.const 6
-  i32.const 720
+  i32.const 784
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $3
@@ -4016,7 +4041,7 @@
   i32.const 0
   i32.const 2
   i32.const 6
-  i32.const 752
+  i32.const 816
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $3
@@ -4068,9 +4093,9 @@
   i32.eq
   i32.eqz
   if
-   i32.const 784
    i32.const 848
-   i32.const 103
+   i32.const 912
+   i32.const 107
    i32.const 5
    call $~lib/builtins/abort
    unreachable
@@ -4078,7 +4103,7 @@
   i32.const 0
   i32.const 2
   i32.const 6
-  i32.const 912
+  i32.const 976
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $3
@@ -4121,58 +4146,66 @@
   call $~lib/rt/pure/__release
   local.get $2
  )
- (func $assembly/index/initialize (param $0 i32) (param $1 i32)
-  (local $2 i32)
-  (local $3 i32)
+ (func $assembly/index/initialize (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (local $4 i32)
   (local $5 i32)
   (local $6 i32)
   (local $7 i32)
   (local $8 i32)
   (local $9 i32)
+  (local $10 i32)
+  (local $11 i32)
+  (local $12 i32)
+  (local $13 i32)
   local.get $0
   call $~lib/rt/pure/__retain
   local.set $0
   local.get $1
   call $~lib/rt/pure/__retain
   local.set $1
+  local.get $2
+  call $~lib/rt/pure/__retain
+  local.set $2
+  local.get $3
+  call $~lib/rt/pure/__retain
+  local.set $3
   i32.const 0
   i32.const 2
   i32.const 6
   i32.const 512
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
-  local.set $3
+  local.set $5
   i32.const 0
-  local.set $2
+  local.set $4
   loop $for-loop|0
-   local.get $2
+   local.get $4
    local.get $0
    call $~lib/typedarray/Float32Array#get:length
    i32.lt_s
-   local.set $4
-   local.get $4
+   local.set $6
+   local.get $6
    if
-    local.get $3
+    local.get $5
     local.get $0
-    local.get $2
+    local.get $4
     call $~lib/typedarray/Float32Array#__get
     call $~lib/array/Array<f32>#push
     drop
-    local.get $2
+    local.get $4
     i32.const 1
     i32.add
-    local.set $2
+    local.set $4
     br $for-loop|0
    end
   end
   i32.const 0
-  local.get $3
+  local.get $5
   call $assembly/index/VectorXd#constructor
-  local.set $4
+  local.set $6
   global.get $assembly/index/vertices
   call $~lib/rt/pure/__release
-  local.get $4
+  local.get $6
   global.set $assembly/index/vertices
   i32.const 0
   i32.const 2
@@ -4180,76 +4213,148 @@
   i32.const 608
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
-  local.set $2
-  i32.const 0
   local.set $4
+  i32.const 0
+  local.set $6
   loop $for-loop|1
-   local.get $4
+   local.get $6
    local.get $1
    call $~lib/typedarray/Int32Array#get:length
    i32.lt_s
-   local.set $5
-   local.get $5
+   local.set $7
+   local.get $7
    if
-    local.get $2
-    local.get $1
     local.get $4
+    local.get $1
+    local.get $6
     call $~lib/typedarray/Int32Array#__get
     call $~lib/array/Array<i32>#push
     drop
-    local.get $4
+    local.get $6
     i32.const 1
     i32.add
-    local.set $4
+    local.set $6
     br $for-loop|1
    end
   end
   i32.const 0
-  local.get $2
+  local.get $4
   call $assembly/index/VectorXi#constructor
-  local.set $5
+  local.set $7
   global.get $assembly/index/edges
   call $~lib/rt/pure/__release
-  local.get $5
+  local.get $7
   global.set $assembly/index/edges
+  i32.const 0
+  i32.const 2
+  i32.const 7
+  i32.const 640
+  call $~lib/rt/__newArray
+  call $~lib/rt/pure/__retain
+  local.set $6
+  i32.const 0
+  local.set $7
+  loop $for-loop|2
+   local.get $7
+   local.get $2
+   call $~lib/typedarray/Int32Array#get:length
+   i32.lt_s
+   local.set $8
+   local.get $8
+   if
+    local.get $6
+    local.get $2
+    local.get $7
+    call $~lib/typedarray/Int32Array#__get
+    call $~lib/array/Array<i32>#push
+    drop
+    local.get $7
+    i32.const 1
+    i32.add
+    local.set $7
+    br $for-loop|2
+   end
+  end
+  i32.const 0
+  local.get $6
+  call $assembly/index/VectorXi#constructor
+  local.set $8
+  global.get $assembly/index/faces
+  call $~lib/rt/pure/__release
+  local.get $8
+  global.set $assembly/index/faces
+  i32.const 0
+  i32.const 2
+  i32.const 7
+  i32.const 672
+  call $~lib/rt/__newArray
+  call $~lib/rt/pure/__retain
+  local.set $7
+  i32.const 0
+  local.set $8
+  loop $for-loop|3
+   local.get $8
+   local.get $3
+   call $~lib/typedarray/Int32Array#get:length
+   i32.lt_s
+   local.set $9
+   local.get $9
+   if
+    local.get $7
+    local.get $3
+    local.get $8
+    call $~lib/typedarray/Int32Array#__get
+    call $~lib/array/Array<i32>#push
+    drop
+    local.get $8
+    i32.const 1
+    i32.add
+    local.set $8
+    br $for-loop|3
+   end
+  end
+  i32.const 0
+  local.get $7
+  call $assembly/index/VectorXi#constructor
+  local.set $9
+  global.get $assembly/index/mountains
+  call $~lib/rt/pure/__release
+  local.get $9
+  global.set $assembly/index/mountains
   i32.const 0
   global.get $assembly/index/vertices
   i32.load
   call $assembly/index/VectorXd#constructor
-  local.tee $5
+  local.tee $9
   global.get $assembly/index/num_vertices
   i32.const 3
   i32.mul
   call $assembly/index/VectorXd.Random
-  local.tee $4
+  local.tee $8
   f32.const 2
   call $assembly/index/VectorXd#muls
-  local.tee $6
+  local.tee $10
   f32.const -1
   call $assembly/index/VectorXd#adds
-  local.tee $7
+  local.tee $11
   f32.const 0.20000000298023224
   call $assembly/index/VectorXd#muls
-  local.tee $8
+  local.tee $12
   call $assembly/index/VectorXd#addv
-  local.set $9
+  local.set $13
   global.get $assembly/index/q
   call $~lib/rt/pure/__release
-  local.get $9
+  local.get $13
   global.set $assembly/index/q
   global.get $assembly/index/num_vertices
   i32.const 3
   i32.mul
   call $assembly/index/VectorXd.Zeros
-  local.set $9
+  local.set $13
   global.get $assembly/index/qdot
   call $~lib/rt/pure/__release
-  local.get $9
+  local.get $13
   global.set $assembly/index/qdot
-  local.get $3
-  call $~lib/rt/pure/__release
-  local.get $2
-  call $~lib/rt/pure/__release
   local.get $5
   call $~lib/rt/pure/__release
   local.get $4
@@ -4258,11 +4363,23 @@
   call $~lib/rt/pure/__release
   local.get $7
   call $~lib/rt/pure/__release
+  local.get $9
+  call $~lib/rt/pure/__release
   local.get $8
+  call $~lib/rt/pure/__release
+  local.get $10
+  call $~lib/rt/pure/__release
+  local.get $11
+  call $~lib/rt/pure/__release
+  local.get $12
   call $~lib/rt/pure/__release
   local.get $0
   call $~lib/rt/pure/__release
   local.get $1
+  call $~lib/rt/pure/__release
+  local.get $2
+  call $~lib/rt/pure/__release
+  local.get $3
   call $~lib/rt/pure/__release
  )
  (func $assembly/index/VectorXi#get:size (param $0 i32) (result i32)
@@ -4285,8 +4402,8 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 848
-   i32.const 197
+   i32.const 912
+   i32.const 219
    i32.const 5
    call $~lib/builtins/abort
    unreachable
@@ -4313,9 +4430,9 @@
   end
   i32.eqz
   if
-   i32.const 944
-   i32.const 848
-   i32.const 58
+   i32.const 1008
+   i32.const 912
+   i32.const 62
    i32.const 5
    call $~lib/builtins/abort
    unreachable
@@ -4335,9 +4452,9 @@
   end
   i32.eqz
   if
-   i32.const 944
-   i32.const 848
-   i32.const 59
+   i32.const 1008
+   i32.const 912
+   i32.const 63
    i32.const 5
    call $~lib/builtins/abort
    unreachable
@@ -4345,7 +4462,7 @@
   i32.const 0
   i32.const 2
   i32.const 6
-  i32.const 992
+  i32.const 1056
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $4
@@ -4396,9 +4513,9 @@
   i32.eq
   i32.eqz
   if
-   i32.const 784
    i32.const 848
-   i32.const 120
+   i32.const 912
+   i32.const 124
    i32.const 5
    call $~lib/builtins/abort
    unreachable
@@ -4406,7 +4523,7 @@
   i32.const 0
   i32.const 2
   i32.const 6
-  i32.const 1024
+  i32.const 1088
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $3
@@ -4464,9 +4581,9 @@
   i32.eq
   i32.eqz
   if
-   i32.const 784
    i32.const 848
-   i32.const 129
+   i32.const 912
+   i32.const 133
    i32.const 5
    call $~lib/builtins/abort
    unreachable
@@ -4509,9 +4626,13 @@
   local.get $5
  )
  (func $assembly/index/VectorXd#squaredNorm (param $0 i32) (result f32)
+  (local $1 f32)
   local.get $0
   local.get $0
   call $assembly/index/VectorXd#dot
+  local.set $1
+  local.get $1
+  f32.abs
  )
  (func $assembly/index/VectorXd#norm (param $0 i32) (result f32)
   (local $1 f32)
@@ -4531,8 +4652,8 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 848
-   i32.const 146
+   i32.const 912
+   i32.const 168
    i32.const 5
    call $~lib/builtins/abort
    unreachable
@@ -4540,7 +4661,7 @@
   i32.const 0
   i32.const 2
   i32.const 6
-  i32.const 1056
+  i32.const 1120
   call $~lib/rt/__newArray
   call $~lib/rt/pure/__retain
   local.set $3
@@ -4599,8 +4720,8 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 848
-   i32.const 48
+   i32.const 912
+   i32.const 52
    i32.const 5
    call $~lib/builtins/abort
    unreachable
@@ -4671,8 +4792,8 @@
   i32.eqz
   if
    i32.const 0
-   i32.const 848
-   i32.const 53
+   i32.const 912
+   i32.const 57
    i32.const 5
    call $~lib/builtins/abort
    unreachable
@@ -4957,11 +5078,1727 @@
   end
   local.get $0
  )
+ (func $assembly/index/compute_height (param $0 i32) (param $1 i32) (param $2 i32) (result f32)
+  (local $3 i32)
+  (local $4 f32)
+  (local $5 i32)
+  (local $6 f32)
+  (local $7 i32)
+  (local $8 f32)
+  (local $9 f32)
+  (local $10 f32)
+  (local $11 f32)
+  (local $12 f32)
+  local.get $0
+  call $~lib/rt/pure/__retain
+  local.set $0
+  local.get $1
+  call $~lib/rt/pure/__retain
+  local.set $1
+  local.get $2
+  call $~lib/rt/pure/__retain
+  local.set $2
+  local.get $2
+  local.get $1
+  call $assembly/index/VectorXd#subv
+  local.tee $3
+  call $assembly/index/VectorXd#norm
+  local.set $4
+  local.get $1
+  local.get $0
+  call $assembly/index/VectorXd#subv
+  local.tee $5
+  call $assembly/index/VectorXd#norm
+  local.set $6
+  local.get $0
+  local.get $2
+  call $assembly/index/VectorXd#subv
+  local.tee $7
+  call $assembly/index/VectorXd#norm
+  local.set $8
+  local.get $4
+  local.get $6
+  f32.add
+  local.get $8
+  f32.add
+  local.set $9
+  local.get $9
+  f32.const 2
+  f32.div
+  local.set $10
+  local.get $10
+  local.get $4
+  f32.gt
+  if (result i32)
+   local.get $10
+   local.get $6
+   f32.gt
+  else
+   i32.const 0
+  end
+  if (result i32)
+   local.get $10
+   local.get $8
+   f32.gt
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 1152
+   i32.const 912
+   i32.const 509
+   i32.const 3
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $10
+  local.get $10
+  local.get $4
+  f32.sub
+  f32.mul
+  local.get $10
+  local.get $6
+  f32.sub
+  f32.mul
+  local.get $10
+  local.get $8
+  f32.sub
+  f32.mul
+  local.set $11
+  local.get $11
+  f32.sqrt
+  local.set $11
+  f32.const 2
+  local.get $11
+  f32.mul
+  local.get $6
+  f32.div
+  local.set $12
+  local.get $3
+  call $~lib/rt/pure/__release
+  local.get $5
+  call $~lib/rt/pure/__release
+  local.get $7
+  call $~lib/rt/pure/__release
+  local.get $0
+  call $~lib/rt/pure/__release
+  local.get $1
+  call $~lib/rt/pure/__release
+  local.get $2
+  call $~lib/rt/pure/__release
+  local.get $12
+ )
+ (func $assembly/index/VectorXd#cross (param $0 i32) (param $1 i32) (result i32)
+  (local $2 f32)
+  (local $3 f32)
+  (local $4 f32)
+  (local $5 f32)
+  (local $6 f32)
+  (local $7 f32)
+  (local $8 i32)
+  (local $9 i32)
+  local.get $1
+  call $~lib/rt/pure/__retain
+  local.set $1
+  local.get $0
+  call $assembly/index/VectorXd#get:size
+  i32.const 3
+  i32.eq
+  if (result i32)
+   local.get $1
+   call $assembly/index/VectorXd#get:size
+   i32.const 3
+   i32.eq
+  else
+   i32.const 0
+  end
+  i32.eqz
+  if
+   i32.const 1248
+   i32.const 912
+   i32.const 142
+   i32.const 5
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load
+  i32.const 0
+  call $~lib/array/Array<f32>#__get
+  local.set $2
+  local.get $0
+  i32.load
+  i32.const 1
+  call $~lib/array/Array<f32>#__get
+  local.set $3
+  local.get $0
+  i32.load
+  i32.const 2
+  call $~lib/array/Array<f32>#__get
+  local.set $4
+  local.get $1
+  i32.load
+  i32.const 0
+  call $~lib/array/Array<f32>#__get
+  local.set $5
+  local.get $1
+  i32.load
+  i32.const 1
+  call $~lib/array/Array<f32>#__get
+  local.set $6
+  local.get $1
+  i32.load
+  i32.const 2
+  call $~lib/array/Array<f32>#__get
+  local.set $7
+  i32.const 0
+  i32.const 3
+  i32.const 2
+  i32.const 6
+  i32.const 0
+  call $~lib/rt/__newArray
+  call $~lib/rt/pure/__retain
+  local.set $8
+  local.get $8
+  i32.load offset=4
+  local.set $9
+  local.get $9
+  local.get $3
+  local.get $7
+  f32.mul
+  local.get $4
+  local.get $6
+  f32.mul
+  f32.sub
+  f32.store
+  local.get $9
+  local.get $4
+  local.get $5
+  f32.mul
+  local.get $2
+  local.get $7
+  f32.mul
+  f32.sub
+  f32.store offset=4
+  local.get $9
+  local.get $2
+  local.get $6
+  f32.mul
+  local.get $3
+  local.get $5
+  f32.mul
+  f32.sub
+  f32.store offset=8
+  local.get $8
+  local.tee $9
+  call $assembly/index/VectorXd#constructor
+  local.set $8
+  local.get $9
+  call $~lib/rt/pure/__release
+  local.get $1
+  call $~lib/rt/pure/__release
+  local.get $8
+ )
+ (func $~lib/math/Rf (param $0 f32) (result f32)
+  (local $1 f32)
+  (local $2 f32)
+  local.get $0
+  f32.const 0.16666586697101593
+  local.get $0
+  f32.const -0.04274342209100723
+  local.get $0
+  f32.const -0.008656363002955914
+  f32.mul
+  f32.add
+  f32.mul
+  f32.add
+  f32.mul
+  local.set $1
+  f32.const 1
+  local.get $0
+  f32.const -0.7066296339035034
+  f32.mul
+  f32.add
+  local.set $2
+  local.get $1
+  local.get $2
+  f32.div
+ )
+ (func $~lib/math/NativeMathf.acos (param $0 f32) (result f32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 f32)
+  (local $4 f32)
+  (local $5 f32)
+  (local $6 f32)
+  (local $7 f32)
+  local.get $0
+  i32.reinterpret_f32
+  local.set $1
+  local.get $1
+  i32.const 2147483647
+  i32.and
+  local.set $2
+  local.get $2
+  i32.const 1065353216
+  i32.ge_u
+  if
+   local.get $2
+   i32.const 1065353216
+   i32.eq
+   if
+    local.get $1
+    i32.const 31
+    i32.shr_u
+    if
+     f32.const 2
+     f32.const 1.570796251296997
+     f32.mul
+     f32.const 7.52316384526264e-37
+     f32.add
+     return
+    end
+    f32.const 0
+    return
+   end
+   f32.const 0
+   local.get $0
+   local.get $0
+   f32.sub
+   f32.div
+   return
+  end
+  local.get $2
+  i32.const 1056964608
+  i32.lt_u
+  if
+   local.get $2
+   i32.const 847249408
+   i32.le_u
+   if
+    f32.const 1.570796251296997
+    f32.const 7.52316384526264e-37
+    f32.add
+    return
+   end
+   f32.const 1.570796251296997
+   local.get $0
+   f32.const 7.549789415861596e-08
+   local.get $0
+   local.get $0
+   local.get $0
+   f32.mul
+   call $~lib/math/Rf
+   f32.mul
+   f32.sub
+   f32.sub
+   f32.sub
+   return
+  end
+  local.get $1
+  i32.const 31
+  i32.shr_u
+  if
+   f32.const 0.5
+   local.get $0
+   f32.const 0.5
+   f32.mul
+   f32.add
+   local.set $3
+   local.get $3
+   f32.sqrt
+   local.set $5
+   local.get $3
+   call $~lib/math/Rf
+   local.get $5
+   f32.mul
+   f32.const 7.549789415861596e-08
+   f32.sub
+   local.set $4
+   f32.const 2
+   f32.const 1.570796251296997
+   local.get $5
+   local.get $4
+   f32.add
+   f32.sub
+   f32.mul
+   return
+  end
+  f32.const 0.5
+  local.get $0
+  f32.const 0.5
+  f32.mul
+  f32.sub
+  local.set $3
+  local.get $3
+  f32.sqrt
+  local.set $5
+  local.get $5
+  i32.reinterpret_f32
+  local.set $1
+  local.get $1
+  i32.const -4096
+  i32.and
+  f32.reinterpret_i32
+  local.set $6
+  local.get $3
+  local.get $6
+  local.get $6
+  f32.mul
+  f32.sub
+  local.get $5
+  local.get $6
+  f32.add
+  f32.div
+  local.set $7
+  local.get $3
+  call $~lib/math/Rf
+  local.get $5
+  f32.mul
+  local.get $7
+  f32.add
+  local.set $4
+  f32.const 2
+  local.get $6
+  local.get $4
+  f32.add
+  f32.mul
+ )
+ (func $~lib/math/NativeMathf.tan (param $0 f32) (result f32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 f64)
+  (local $5 f64)
+  (local $6 f64)
+  (local $7 f64)
+  (local $8 f64)
+  (local $9 f64)
+  (local $10 f64)
+  (local $11 i32)
+  (local $12 f32)
+  (local $13 i32)
+  (local $14 f32)
+  (local $15 i32)
+  (local $16 i64)
+  (local $17 i32)
+  (local $18 i64)
+  (local $19 i64)
+  (local $20 i64)
+  (local $21 i64)
+  (local $22 i64)
+  (local $23 i64)
+  (local $24 i64)
+  (local $25 i32)
+  (local $26 i32)
+  (local $27 f64)
+  local.get $0
+  i32.reinterpret_f32
+  local.set $1
+  local.get $1
+  i32.const 31
+  i32.shr_u
+  local.set $2
+  local.get $1
+  i32.const 2147483647
+  i32.and
+  local.set $1
+  local.get $1
+  i32.const 1061752794
+  i32.le_u
+  if
+   local.get $1
+   i32.const 964689920
+   i32.lt_u
+   if
+    local.get $0
+    return
+   end
+   local.get $0
+   f64.promote_f32
+   local.set $4
+   i32.const 0
+   local.set $3
+   local.get $4
+   local.get $4
+   f64.mul
+   local.set $5
+   f64.const 0.002974357433599673
+   local.get $5
+   f64.const 0.009465647849436732
+   f64.mul
+   f64.add
+   local.set $6
+   f64.const 0.05338123784456704
+   local.get $5
+   f64.const 0.024528318116654728
+   f64.mul
+   f64.add
+   local.set $7
+   local.get $5
+   local.get $5
+   f64.mul
+   local.set $8
+   local.get $5
+   local.get $4
+   f64.mul
+   local.set $9
+   f64.const 0.3333313950307914
+   local.get $5
+   f64.const 0.13339200271297674
+   f64.mul
+   f64.add
+   local.set $10
+   local.get $4
+   local.get $9
+   local.get $10
+   f64.mul
+   f64.add
+   local.get $9
+   local.get $8
+   f64.mul
+   local.get $7
+   local.get $8
+   local.get $6
+   f64.mul
+   f64.add
+   f64.mul
+   f64.add
+   local.set $6
+   local.get $3
+   if (result f64)
+    f32.const -1
+    f64.promote_f32
+    local.get $6
+    f64.div
+   else
+    local.get $6
+   end
+   f32.demote_f64
+   return
+  end
+  i32.const 0
+  i32.const 1
+  i32.lt_s
+  drop
+  local.get $1
+  i32.const 1081824209
+  i32.le_u
+  if
+   local.get $1
+   i32.const 1075235811
+   i32.le_u
+   if
+    local.get $2
+    if (result f64)
+     local.get $0
+     f64.promote_f32
+     f64.const 1.5707963267948966
+     f64.add
+    else
+     local.get $0
+     f64.promote_f32
+     f64.const 1.5707963267948966
+     f64.sub
+    end
+    local.set $4
+    i32.const 1
+    local.set $3
+    local.get $4
+    local.get $4
+    f64.mul
+    local.set $10
+    f64.const 0.002974357433599673
+    local.get $10
+    f64.const 0.009465647849436732
+    f64.mul
+    f64.add
+    local.set $9
+    f64.const 0.05338123784456704
+    local.get $10
+    f64.const 0.024528318116654728
+    f64.mul
+    f64.add
+    local.set $8
+    local.get $10
+    local.get $10
+    f64.mul
+    local.set $7
+    local.get $10
+    local.get $4
+    f64.mul
+    local.set $6
+    f64.const 0.3333313950307914
+    local.get $10
+    f64.const 0.13339200271297674
+    f64.mul
+    f64.add
+    local.set $5
+    local.get $4
+    local.get $6
+    local.get $5
+    f64.mul
+    f64.add
+    local.get $6
+    local.get $7
+    f64.mul
+    local.get $8
+    local.get $7
+    local.get $9
+    f64.mul
+    f64.add
+    f64.mul
+    f64.add
+    local.set $9
+    local.get $3
+    if (result f64)
+     f32.const -1
+     f64.promote_f32
+     local.get $9
+     f64.div
+    else
+     local.get $9
+    end
+    f32.demote_f64
+    return
+   else
+    local.get $2
+    if (result f64)
+     local.get $0
+     f64.promote_f32
+     f64.const 3.141592653589793
+     f64.add
+    else
+     local.get $0
+     f64.promote_f32
+     f64.const 3.141592653589793
+     f64.sub
+    end
+    local.set $4
+    i32.const 0
+    local.set $3
+    local.get $4
+    local.get $4
+    f64.mul
+    local.set $5
+    f64.const 0.002974357433599673
+    local.get $5
+    f64.const 0.009465647849436732
+    f64.mul
+    f64.add
+    local.set $6
+    f64.const 0.05338123784456704
+    local.get $5
+    f64.const 0.024528318116654728
+    f64.mul
+    f64.add
+    local.set $7
+    local.get $5
+    local.get $5
+    f64.mul
+    local.set $8
+    local.get $5
+    local.get $4
+    f64.mul
+    local.set $9
+    f64.const 0.3333313950307914
+    local.get $5
+    f64.const 0.13339200271297674
+    f64.mul
+    f64.add
+    local.set $10
+    local.get $4
+    local.get $9
+    local.get $10
+    f64.mul
+    f64.add
+    local.get $9
+    local.get $8
+    f64.mul
+    local.get $7
+    local.get $8
+    local.get $6
+    f64.mul
+    f64.add
+    f64.mul
+    f64.add
+    local.set $6
+    local.get $3
+    if (result f64)
+     f32.const -1
+     f64.promote_f32
+     local.get $6
+     f64.div
+    else
+     local.get $6
+    end
+    f32.demote_f64
+    return
+   end
+   unreachable
+  end
+  local.get $1
+  i32.const 1088565717
+  i32.le_u
+  if
+   local.get $1
+   i32.const 1085271519
+   i32.le_u
+   if
+    local.get $2
+    if (result f64)
+     local.get $0
+     f64.promote_f32
+     f64.const 4.71238898038469
+     f64.add
+    else
+     local.get $0
+     f64.promote_f32
+     f64.const 4.71238898038469
+     f64.sub
+    end
+    local.set $4
+    i32.const 1
+    local.set $3
+    local.get $4
+    local.get $4
+    f64.mul
+    local.set $10
+    f64.const 0.002974357433599673
+    local.get $10
+    f64.const 0.009465647849436732
+    f64.mul
+    f64.add
+    local.set $9
+    f64.const 0.05338123784456704
+    local.get $10
+    f64.const 0.024528318116654728
+    f64.mul
+    f64.add
+    local.set $8
+    local.get $10
+    local.get $10
+    f64.mul
+    local.set $7
+    local.get $10
+    local.get $4
+    f64.mul
+    local.set $6
+    f64.const 0.3333313950307914
+    local.get $10
+    f64.const 0.13339200271297674
+    f64.mul
+    f64.add
+    local.set $5
+    local.get $4
+    local.get $6
+    local.get $5
+    f64.mul
+    f64.add
+    local.get $6
+    local.get $7
+    f64.mul
+    local.get $8
+    local.get $7
+    local.get $9
+    f64.mul
+    f64.add
+    f64.mul
+    f64.add
+    local.set $9
+    local.get $3
+    if (result f64)
+     f32.const -1
+     f64.promote_f32
+     local.get $9
+     f64.div
+    else
+     local.get $9
+    end
+    f32.demote_f64
+    return
+   else
+    local.get $2
+    if (result f64)
+     local.get $0
+     f64.promote_f32
+     f64.const 6.283185307179586
+     f64.add
+    else
+     local.get $0
+     f64.promote_f32
+     f64.const 6.283185307179586
+     f64.sub
+    end
+    local.set $4
+    i32.const 0
+    local.set $3
+    local.get $4
+    local.get $4
+    f64.mul
+    local.set $5
+    f64.const 0.002974357433599673
+    local.get $5
+    f64.const 0.009465647849436732
+    f64.mul
+    f64.add
+    local.set $6
+    f64.const 0.05338123784456704
+    local.get $5
+    f64.const 0.024528318116654728
+    f64.mul
+    f64.add
+    local.set $7
+    local.get $5
+    local.get $5
+    f64.mul
+    local.set $8
+    local.get $5
+    local.get $4
+    f64.mul
+    local.set $9
+    f64.const 0.3333313950307914
+    local.get $5
+    f64.const 0.13339200271297674
+    f64.mul
+    f64.add
+    local.set $10
+    local.get $4
+    local.get $9
+    local.get $10
+    f64.mul
+    f64.add
+    local.get $9
+    local.get $8
+    f64.mul
+    local.get $7
+    local.get $8
+    local.get $6
+    f64.mul
+    f64.add
+    f64.mul
+    f64.add
+    local.set $6
+    local.get $3
+    if (result f64)
+     f32.const -1
+     f64.promote_f32
+     local.get $6
+     f64.div
+    else
+     local.get $6
+    end
+    f32.demote_f64
+    return
+   end
+   unreachable
+  end
+  local.get $1
+  i32.const 2139095040
+  i32.ge_u
+  if
+   local.get $0
+   local.get $0
+   f32.sub
+   return
+  end
+  block $~lib/math/rempio2f|inlined.0 (result i32)
+   local.get $0
+   local.set $12
+   local.get $1
+   local.set $11
+   local.get $2
+   local.set $3
+   local.get $11
+   i32.const 1305022427
+   i32.lt_u
+   if
+    local.get $12
+    f64.promote_f32
+    f64.const 0.6366197723675814
+    f64.mul
+    f64.nearest
+    local.set $10
+    local.get $12
+    f64.promote_f32
+    local.get $10
+    f64.const 1.5707963109016418
+    f64.mul
+    f64.sub
+    local.get $10
+    f64.const 1.5893254773528196e-08
+    f64.mul
+    f64.sub
+    global.set $~lib/math/rempio2f_y
+    local.get $10
+    i32.trunc_f64_s
+    br $~lib/math/rempio2f|inlined.0
+   end
+   local.get $12
+   local.set $14
+   local.get $11
+   local.set $13
+   local.get $13
+   i32.const 23
+   i32.shr_s
+   i32.const 152
+   i32.sub
+   local.set $15
+   local.get $15
+   i32.const 63
+   i32.and
+   i64.extend_i32_s
+   local.set $16
+   i32.const 1344
+   local.get $15
+   i32.const 6
+   i32.shr_s
+   i32.const 3
+   i32.shl
+   i32.add
+   local.set $17
+   local.get $17
+   i64.load
+   local.set $18
+   local.get $17
+   i64.load offset=8
+   local.set $19
+   local.get $16
+   i64.const 32
+   i64.gt_u
+   if
+    local.get $17
+    i64.load offset=16
+    local.set $21
+    local.get $21
+    i64.const 96
+    local.get $16
+    i64.sub
+    i64.shr_u
+    local.set $20
+    local.get $20
+    local.get $19
+    local.get $16
+    i64.const 32
+    i64.sub
+    i64.shl
+    i64.or
+    local.set $20
+   else
+    local.get $19
+    i64.const 32
+    local.get $16
+    i64.sub
+    i64.shr_u
+    local.set $20
+   end
+   local.get $19
+   i64.const 64
+   local.get $16
+   i64.sub
+   i64.shr_u
+   local.get $18
+   local.get $16
+   i64.shl
+   i64.or
+   local.set $21
+   local.get $13
+   i32.const 8388607
+   i32.and
+   i32.const 8388608
+   i32.or
+   i64.extend_i32_s
+   local.set $22
+   local.get $22
+   local.get $21
+   i64.mul
+   local.get $22
+   local.get $20
+   i64.mul
+   i64.const 32
+   i64.shr_u
+   i64.add
+   local.set $23
+   local.get $23
+   i64.const 2
+   i64.shl
+   local.set $24
+   local.get $23
+   i64.const 62
+   i64.shr_u
+   local.get $24
+   i64.const 63
+   i64.shr_u
+   i64.add
+   i32.wrap_i64
+   local.set $25
+   f64.const 8.515303950216386e-20
+   local.get $14
+   f64.promote_f32
+   f64.copysign
+   local.get $24
+   f64.convert_i64_s
+   f64.mul
+   global.set $~lib/math/rempio2f_y
+   local.get $25
+   local.set $25
+   i32.const 0
+   local.get $25
+   i32.sub
+   local.get $25
+   local.get $3
+   select
+  end
+  local.set $26
+  global.get $~lib/math/rempio2f_y
+  local.set $27
+  local.get $27
+  local.set $4
+  local.get $26
+  i32.const 1
+  i32.and
+  local.set $13
+  local.get $4
+  local.get $4
+  f64.mul
+  local.set $10
+  f64.const 0.002974357433599673
+  local.get $10
+  f64.const 0.009465647849436732
+  f64.mul
+  f64.add
+  local.set $9
+  f64.const 0.05338123784456704
+  local.get $10
+  f64.const 0.024528318116654728
+  f64.mul
+  f64.add
+  local.set $8
+  local.get $10
+  local.get $10
+  f64.mul
+  local.set $7
+  local.get $10
+  local.get $4
+  f64.mul
+  local.set $6
+  f64.const 0.3333313950307914
+  local.get $10
+  f64.const 0.13339200271297674
+  f64.mul
+  f64.add
+  local.set $5
+  local.get $4
+  local.get $6
+  local.get $5
+  f64.mul
+  f64.add
+  local.get $6
+  local.get $7
+  f64.mul
+  local.get $8
+  local.get $7
+  local.get $9
+  f64.mul
+  f64.add
+  f64.mul
+  f64.add
+  local.set $9
+  local.get $13
+  if (result f64)
+   f32.const -1
+   f64.promote_f32
+   local.get $9
+   f64.div
+  else
+   local.get $9
+  end
+  f32.demote_f64
+ )
  (func $assembly/index/compute_crease_force (result i32)
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i32)
+  (local $10 i32)
+  (local $11 f32)
+  (local $12 f32)
+  (local $13 i32)
+  (local $14 i32)
+  (local $15 i32)
+  (local $16 i32)
+  (local $17 i32)
+  (local $18 i32)
+  (local $19 i32)
+  (local $20 i32)
+  (local $21 f32)
+  (local $22 i32)
+  (local $23 i32)
+  (local $24 i32)
+  (local $25 i32)
+  (local $26 f32)
+  (local $27 i32)
+  (local $28 i32)
+  (local $29 i32)
+  (local $30 i32)
+  (local $31 f32)
+  (local $32 i32)
+  (local $33 i32)
+  (local $34 i32)
+  (local $35 i32)
+  (local $36 f32)
+  (local $37 i32)
+  (local $38 i32)
+  (local $39 i32)
+  (local $40 i32)
+  (local $41 f32)
+  (local $42 i32)
+  (local $43 f32)
+  (local $44 f32)
+  (local $45 i32)
+  (local $46 i32)
+  (local $47 i32)
+  (local $48 i32)
+  (local $49 i32)
+  (local $50 i32)
+  (local $51 i32)
+  (local $52 i32)
+  (local $53 i32)
+  (local $54 i32)
+  (local $55 i32)
+  (local $56 i32)
+  (local $57 i32)
+  (local $58 i32)
+  (local $59 i32)
+  (local $60 i32)
   global.get $assembly/index/num_vertices
   i32.const 3
   i32.mul
   call $assembly/index/VectorXd.Zeros
+  local.set $0
+  i32.const 0
+  local.set $1
+  loop $for-loop|0
+   local.get $1
+   global.get $assembly/index/num_mountains
+   i32.lt_s
+   local.set $2
+   local.get $2
+   if
+    global.get $assembly/index/mountains
+    i32.const 4
+    local.get $1
+    i32.mul
+    i32.const 0
+    i32.add
+    call $assembly/index/VectorXi#get
+    local.set $3
+    global.get $assembly/index/mountains
+    i32.const 4
+    local.get $1
+    i32.mul
+    i32.const 1
+    i32.add
+    call $assembly/index/VectorXi#get
+    local.set $4
+    global.get $assembly/index/mountains
+    i32.const 4
+    local.get $1
+    i32.mul
+    i32.const 2
+    i32.add
+    call $assembly/index/VectorXi#get
+    local.set $5
+    global.get $assembly/index/mountains
+    i32.const 4
+    local.get $1
+    i32.mul
+    i32.const 3
+    i32.add
+    call $assembly/index/VectorXi#get
+    local.set $6
+    global.get $assembly/index/q
+    i32.const 3
+    i32.const 3
+    local.get $3
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $7
+    global.get $assembly/index/q
+    i32.const 3
+    i32.const 3
+    local.get $4
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $8
+    global.get $assembly/index/q
+    i32.const 3
+    i32.const 3
+    local.get $5
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $9
+    global.get $assembly/index/q
+    i32.const 3
+    i32.const 3
+    local.get $6
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $10
+    local.get $10
+    local.get $9
+    local.get $7
+    call $assembly/index/compute_height
+    local.set $11
+    local.get $9
+    local.get $10
+    local.get $8
+    call $assembly/index/compute_height
+    local.set $12
+    local.get $10
+    local.get $7
+    call $assembly/index/VectorXd#subv
+    local.tee $13
+    local.get $9
+    local.get $7
+    call $assembly/index/VectorXd#subv
+    local.tee $14
+    call $assembly/index/VectorXd#cross
+    local.tee $15
+    call $assembly/index/VectorXd#normalized
+    local.set $16
+    local.get $9
+    local.get $8
+    call $assembly/index/VectorXd#subv
+    local.tee $17
+    local.get $10
+    local.get $8
+    call $assembly/index/VectorXd#subv
+    local.tee $18
+    call $assembly/index/VectorXd#cross
+    local.tee $19
+    call $assembly/index/VectorXd#normalized
+    local.set $20
+    local.get $16
+    local.get $20
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $21
+    local.get $7
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $22
+    call $assembly/index/VectorXd#normalized
+    local.tee $23
+    local.get $9
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $24
+    call $assembly/index/VectorXd#normalized
+    local.tee $25
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $26
+    local.get $9
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $27
+    call $assembly/index/VectorXd#normalized
+    local.tee $28
+    local.get $8
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $29
+    call $assembly/index/VectorXd#normalized
+    local.tee $30
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $31
+    local.get $10
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $32
+    call $assembly/index/VectorXd#normalized
+    local.tee $33
+    local.get $7
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $34
+    call $assembly/index/VectorXd#normalized
+    local.tee $35
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $36
+    local.get $8
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $37
+    call $assembly/index/VectorXd#normalized
+    local.tee $38
+    local.get $10
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $39
+    call $assembly/index/VectorXd#normalized
+    local.tee $40
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $41
+    local.get $10
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $42
+    call $assembly/index/VectorXd#norm
+    local.set $43
+    local.get $43
+    global.get $assembly/index/k_fold
+    f32.mul
+    local.set $44
+    local.get $16
+    local.get $11
+    call $assembly/index/VectorXd#divs
+    local.tee $45
+    local.get $44
+    f32.neg
+    local.get $21
+    global.get $assembly/index/theta_target
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $46
+    local.get $20
+    local.get $12
+    call $assembly/index/VectorXd#divs
+    local.tee $47
+    local.get $44
+    f32.neg
+    local.get $21
+    global.get $assembly/index/theta_target
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $48
+    local.get $16
+    local.get $11
+    call $assembly/index/VectorXd#divs
+    local.tee $49
+    f32.const -1
+    local.get $26
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.const 1
+    local.get $36
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.const 1
+    local.get $26
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.add
+    f32.div
+    call $assembly/index/VectorXd#muls
+    local.tee $50
+    local.get $20
+    local.get $12
+    call $assembly/index/VectorXd#divs
+    local.tee $51
+    f32.const -1
+    local.get $31
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.const 1
+    local.get $41
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.const 1
+    local.get $31
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.add
+    f32.div
+    call $assembly/index/VectorXd#muls
+    local.tee $52
+    call $assembly/index/VectorXd#addv
+    local.tee $53
+    local.get $44
+    f32.neg
+    local.get $21
+    global.get $assembly/index/theta_target
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $54
+    local.get $16
+    local.get $11
+    call $assembly/index/VectorXd#divs
+    local.tee $55
+    f32.const -1
+    local.get $36
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.const 1
+    local.get $36
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.const 1
+    local.get $26
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.add
+    f32.div
+    call $assembly/index/VectorXd#muls
+    local.tee $56
+    local.get $20
+    local.get $12
+    call $assembly/index/VectorXd#divs
+    local.tee $57
+    f32.const -1
+    local.get $41
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.const 1
+    local.get $41
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.const 1
+    local.get $31
+    call $~lib/math/NativeMathf.tan
+    f32.div
+    f32.add
+    f32.div
+    call $assembly/index/VectorXd#muls
+    local.tee $58
+    call $assembly/index/VectorXd#addv
+    local.tee $59
+    local.get $44
+    f32.neg
+    local.get $21
+    global.get $assembly/index/theta_target
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $60
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 0
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 0
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $46
+    i32.const 0
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 1
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 1
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $46
+    i32.const 1
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 2
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 2
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $46
+    i32.const 2
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 0
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 0
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $48
+    i32.const 0
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 1
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 1
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $48
+    i32.const 1
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 2
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 2
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $48
+    i32.const 2
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 0
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 0
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $54
+    i32.const 0
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 1
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 1
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $54
+    i32.const 1
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 2
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 2
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $54
+    i32.const 2
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $6
+    i32.mul
+    i32.const 0
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $6
+    i32.mul
+    i32.const 0
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $60
+    i32.const 0
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $6
+    i32.mul
+    i32.const 1
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $6
+    i32.mul
+    i32.const 1
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $60
+    i32.const 1
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $6
+    i32.mul
+    i32.const 2
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $6
+    i32.mul
+    i32.const 2
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $60
+    i32.const 2
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $7
+    call $~lib/rt/pure/__release
+    local.get $8
+    call $~lib/rt/pure/__release
+    local.get $9
+    call $~lib/rt/pure/__release
+    local.get $10
+    call $~lib/rt/pure/__release
+    local.get $13
+    call $~lib/rt/pure/__release
+    local.get $14
+    call $~lib/rt/pure/__release
+    local.get $15
+    call $~lib/rt/pure/__release
+    local.get $16
+    call $~lib/rt/pure/__release
+    local.get $17
+    call $~lib/rt/pure/__release
+    local.get $18
+    call $~lib/rt/pure/__release
+    local.get $19
+    call $~lib/rt/pure/__release
+    local.get $20
+    call $~lib/rt/pure/__release
+    local.get $22
+    call $~lib/rt/pure/__release
+    local.get $23
+    call $~lib/rt/pure/__release
+    local.get $24
+    call $~lib/rt/pure/__release
+    local.get $25
+    call $~lib/rt/pure/__release
+    local.get $27
+    call $~lib/rt/pure/__release
+    local.get $28
+    call $~lib/rt/pure/__release
+    local.get $29
+    call $~lib/rt/pure/__release
+    local.get $30
+    call $~lib/rt/pure/__release
+    local.get $32
+    call $~lib/rt/pure/__release
+    local.get $33
+    call $~lib/rt/pure/__release
+    local.get $34
+    call $~lib/rt/pure/__release
+    local.get $35
+    call $~lib/rt/pure/__release
+    local.get $37
+    call $~lib/rt/pure/__release
+    local.get $38
+    call $~lib/rt/pure/__release
+    local.get $39
+    call $~lib/rt/pure/__release
+    local.get $40
+    call $~lib/rt/pure/__release
+    local.get $42
+    call $~lib/rt/pure/__release
+    local.get $45
+    call $~lib/rt/pure/__release
+    local.get $46
+    call $~lib/rt/pure/__release
+    local.get $47
+    call $~lib/rt/pure/__release
+    local.get $48
+    call $~lib/rt/pure/__release
+    local.get $49
+    call $~lib/rt/pure/__release
+    local.get $50
+    call $~lib/rt/pure/__release
+    local.get $51
+    call $~lib/rt/pure/__release
+    local.get $52
+    call $~lib/rt/pure/__release
+    local.get $53
+    call $~lib/rt/pure/__release
+    local.get $54
+    call $~lib/rt/pure/__release
+    local.get $55
+    call $~lib/rt/pure/__release
+    local.get $56
+    call $~lib/rt/pure/__release
+    local.get $57
+    call $~lib/rt/pure/__release
+    local.get $58
+    call $~lib/rt/pure/__release
+    local.get $59
+    call $~lib/rt/pure/__release
+    local.get $60
+    call $~lib/rt/pure/__release
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+  local.get $0
  )
  (func $assembly/index/compute_face_force (result i32)
   global.get $assembly/index/num_vertices
@@ -5291,7 +7128,7 @@
   i32.gt_u
   if
    i32.const 256
-   i32.const 1088
+   i32.const 1408
    i32.const 18
    i32.const 57
    call $~lib/builtins/abort

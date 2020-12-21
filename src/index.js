@@ -53,6 +53,10 @@ const faces = new Int32Array([
   ...[2, 3, 0], // top left
 ]);
 
+const mountains = new Int32Array([
+  ...[1, 3, 0, 2], // [p1, p2, p3, p4]
+]);
+
 // Set up dimensions
 // const num_vertices = vertices.length / 3;
 // const num_edges = edges.length / 2;
@@ -143,6 +147,8 @@ worker.onmessage = function (e) {
         type: "main/initialize",
         vertices,
         edges,
+        faces,
+        mountains,
       });
       return;
     }
