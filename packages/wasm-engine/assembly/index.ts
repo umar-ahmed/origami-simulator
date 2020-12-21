@@ -407,10 +407,13 @@ const num_vertices: i32 = 4;
 const num_edges: i32 = 5;
 const num_faces: i32 = 2;
 const num_mountains: i32 = 1;
+
+// Simulation parameters
 const damping_ratio: f32 = 0.45;
 const stiffness: f32 = 20;
 const k_fold: f32 = 0.7;
-const theta_target: f32 = Mathf.PI / 2.0;
+const k_face: f32 = 0.2;
+const theta_target: f32 = Mathf.PI / 1.2;
 
 let vertices = VectorXd.Zeros(num_vertices * 3);
 let edges = VectorXi.Zeros(num_edges * 2);
@@ -612,7 +615,138 @@ function compute_crease_force(): VectorXd {
 }
 
 function compute_face_force(): VectorXd {
-  return VectorXd.Zeros(num_vertices * 3);
+  let force = VectorXd.Zeros(num_vertices * 3);
+
+  // For each interior angle of triangular face, apply force to neighbours
+  for (let i = 0; i < num_faces; i++) {
+    const p1Index = faces.get(3 * i + 0);
+    const p2Index = faces.get(3 * i + 1);
+    const p3Index = faces.get(3 * i + 2);
+
+    const p1 = vertices.segment(3, 3 * p1Index);
+    const p2 = vertices.segment(3, 3 * p2Index);
+    const p3 = vertices.segment(3, 3 * p3Index);
+
+    const p1Deformed = q.segment(3, 3 * p1Index);
+    const p2Deformed = q.segment(3, 3 * p2Index);
+    const p3Deformed = q.segment(3, 3 * p3Index);
+
+    // compute normal
+    const n = p2Deformed
+      .subv(p1Deformed)
+      .cross(p3Deformed.subv(p1Deformed))
+      .normalized();
+
+    // contribution from angle at p1
+    const alpha0_1_23 = Mathf.acos(
+      p2.subv(p1).normalized().dot(p3.subv(p1).normalized())
+    );
+    const alpha_1_23 = Mathf.acos(
+      p2Deformed
+        .subv(p1Deformed)
+        .normalized()
+        .dot(p3Deformed.subv(p1Deformed).normalized())
+    );
+    const f_p1_p1 = n
+      .cross(p2Deformed.subv(p1Deformed))
+      .divs(p2Deformed.subv(p1Deformed).squaredNorm())
+      .addv(
+        n
+          .cross(p3Deformed.subv(p1Deformed))
+          .divs(p3Deformed.subv(p1Deformed).squaredNorm())
+          .muls(-1)
+      )
+      .muls(-k_face * (alpha_1_23 - alpha0_1_23));
+    const f_p1_p2 = n
+      .cross(p2Deformed.subv(p1Deformed))
+      .divs(p2Deformed.subv(p1Deformed).squaredNorm())
+      .muls(-1)
+      .muls(-k_face * (alpha_1_23 - alpha0_1_23));
+    const f_p1_p3 = n
+      .cross(p3Deformed.subv(p1Deformed))
+      .divs(p3Deformed.subv(p1Deformed).squaredNorm())
+      .muls(-k_face * (alpha_1_23 - alpha0_1_23));
+
+    // contribution from angle at p2
+    const alpha0_2_31 = Mathf.acos(
+      p3.subv(p2).normalized().dot(p1.subv(p2).normalized())
+    );
+    const alpha_2_31 = Mathf.acos(
+      p3Deformed
+        .subv(p2Deformed)
+        .normalized()
+        .dot(p1Deformed.subv(p2Deformed).normalized())
+    );
+    const f_p2_p1 = n
+      .cross(p1Deformed.subv(p2Deformed))
+      .divs(p1Deformed.subv(p2Deformed).squaredNorm())
+      .muls(-k_face * (alpha_2_31 - alpha0_2_31));
+    const f_p2_p2 = n
+      .cross(p1Deformed.subv(p2Deformed))
+      .divs(p1Deformed.subv(p2Deformed).squaredNorm())
+      .muls(-1)
+      .addv(
+        n
+          .cross(p3Deformed.subv(p2Deformed))
+          .divs(p3Deformed.subv(p2Deformed).squaredNorm())
+      )
+      .muls(-k_face * (alpha_2_31 - alpha0_2_31));
+    const f_p2_p3 = n
+      .cross(p3Deformed.subv(p2Deformed))
+      .divs(p3Deformed.subv(p2Deformed).squaredNorm())
+      .muls(-1)
+      .muls(-k_face * (alpha_2_31 - alpha0_2_31));
+
+    // contribution from angle at p3
+    const alpha0_3_12 = Mathf.acos(
+      p3.subv(p1).normalized().dot(p3.subv(p2).normalized())
+    );
+    const alpha_3_12 = Mathf.acos(
+      p3Deformed
+        .subv(p1Deformed)
+        .normalized()
+        .dot(p3Deformed.subv(p2Deformed).normalized())
+    );
+    const f_p3_p1 = n
+      .cross(p1Deformed.subv(p3Deformed))
+      .divs(p1Deformed.subv(p3Deformed).squaredNorm())
+      .muls(-1)
+      .muls(-k_face * (alpha_2_31 - alpha0_2_31));
+    const f_p3_p2 = n
+      .cross(p2Deformed.subv(p3Deformed))
+      .divs(p2Deformed.subv(p3Deformed).squaredNorm())
+      .muls(-k_face * (alpha_2_31 - alpha0_2_31));
+    const f_p3_p3 = n
+      .cross(p1Deformed.subv(p3Deformed))
+      .divs(p1Deformed.subv(p3Deformed).squaredNorm())
+      .addv(
+        n
+          .cross(p2Deformed.subv(p3Deformed))
+          .divs(p2Deformed.subv(p3Deformed).squaredNorm())
+          .muls(-1)
+      )
+      .muls(-k_face * (alpha_2_31 - alpha0_2_31));
+
+    // Sum forces
+    const f_p1 = f_p1_p1.addv(f_p2_p1).addv(f_p3_p1);
+    const f_p2 = f_p1_p2.addv(f_p2_p2).addv(f_p3_p2);
+    const f_p3 = f_p1_p3.addv(f_p2_p3).addv(f_p3_p3);
+
+    // Add forces
+    force.set(3 * p1Index + 0, force.get(3 * p1Index + 0) + f_p1.get(0));
+    force.set(3 * p1Index + 1, force.get(3 * p1Index + 1) + f_p1.get(1));
+    force.set(3 * p1Index + 2, force.get(3 * p1Index + 2) + f_p1.get(2));
+
+    force.set(3 * p2Index + 0, force.get(3 * p2Index + 0) + f_p2.get(0));
+    force.set(3 * p2Index + 1, force.get(3 * p2Index + 1) + f_p2.get(1));
+    force.set(3 * p2Index + 2, force.get(3 * p2Index + 2) + f_p2.get(2));
+
+    force.set(3 * p3Index + 0, force.get(3 * p3Index + 0) + f_p3.get(0));
+    force.set(3 * p3Index + 1, force.get(3 * p3Index + 1) + f_p3.get(1));
+    force.set(3 * p3Index + 2, force.get(3 * p3Index + 2) + f_p3.get(2));
+  }
+
+  return force;
 }
 
 function compute_damping_force(): VectorXd {

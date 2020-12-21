@@ -67,9 +67,10 @@
  (global $assembly/index/damping_ratio f32 (f32.const 0.44999998807907104))
  (global $assembly/index/stiffness f32 (f32.const 20))
  (global $assembly/index/k_fold f32 (f32.const 0.699999988079071))
+ (global $assembly/index/k_face f32 (f32.const 0.20000000298023224))
  (global $~lib/math/NativeMath.PI f64 (f64.const 3.141592653589793))
  (global $~lib/math/NativeMathf.PI f32 (f32.const 3.1415927410125732))
- (global $assembly/index/theta_target f32 (f32.const 1.5707963705062866))
+ (global $assembly/index/theta_target f32 (f32.const 2.6179938316345215))
  (global $assembly/index/vertices (mut i32) (i32.const 0))
  (global $assembly/index/edges (mut i32) (i32.const 0))
  (global $assembly/index/faces (mut i32) (i32.const 0))
@@ -5147,7 +5148,7 @@
   if
    i32.const 1152
    i32.const 912
-   i32.const 509
+   i32.const 512
    i32.const 3
    call $~lib/builtins/abort
    unreachable
@@ -6801,10 +6802,973 @@
   local.get $0
  )
  (func $assembly/index/compute_face_force (result i32)
+  (local $0 i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i32)
+  (local $9 i32)
+  (local $10 i32)
+  (local $11 i32)
+  (local $12 i32)
+  (local $13 i32)
+  (local $14 i32)
+  (local $15 i32)
+  (local $16 i32)
+  (local $17 i32)
+  (local $18 i32)
+  (local $19 i32)
+  (local $20 f32)
+  (local $21 i32)
+  (local $22 i32)
+  (local $23 i32)
+  (local $24 i32)
+  (local $25 f32)
+  (local $26 i32)
+  (local $27 i32)
+  (local $28 i32)
+  (local $29 i32)
+  (local $30 i32)
+  (local $31 i32)
+  (local $32 i32)
+  (local $33 i32)
+  (local $34 i32)
+  (local $35 i32)
+  (local $36 i32)
+  (local $37 i32)
+  (local $38 i32)
+  (local $39 i32)
+  (local $40 i32)
+  (local $41 i32)
+  (local $42 i32)
+  (local $43 i32)
+  (local $44 i32)
+  (local $45 i32)
+  (local $46 i32)
+  (local $47 i32)
+  (local $48 i32)
+  (local $49 i32)
+  (local $50 i32)
+  (local $51 i32)
+  (local $52 f32)
+  (local $53 i32)
+  (local $54 i32)
+  (local $55 i32)
+  (local $56 i32)
+  (local $57 f32)
+  (local $58 i32)
+  (local $59 i32)
+  (local $60 i32)
+  (local $61 i32)
+  (local $62 i32)
+  (local $63 i32)
+  (local $64 i32)
+  (local $65 i32)
+  (local $66 i32)
+  (local $67 i32)
+  (local $68 i32)
+  (local $69 i32)
+  (local $70 i32)
+  (local $71 i32)
+  (local $72 i32)
+  (local $73 i32)
+  (local $74 i32)
+  (local $75 i32)
+  (local $76 i32)
+  (local $77 i32)
+  (local $78 i32)
+  (local $79 i32)
+  (local $80 i32)
+  (local $81 i32)
+  (local $82 i32)
+  (local $83 i32)
+  (local $84 f32)
+  (local $85 i32)
+  (local $86 i32)
+  (local $87 i32)
+  (local $88 i32)
+  (local $89 f32)
+  (local $90 i32)
+  (local $91 i32)
+  (local $92 i32)
+  (local $93 i32)
+  (local $94 i32)
+  (local $95 i32)
+  (local $96 i32)
+  (local $97 i32)
+  (local $98 i32)
+  (local $99 i32)
+  (local $100 i32)
+  (local $101 i32)
+  (local $102 i32)
+  (local $103 i32)
+  (local $104 i32)
+  (local $105 i32)
+  (local $106 i32)
+  (local $107 i32)
+  (local $108 i32)
+  (local $109 i32)
+  (local $110 i32)
+  (local $111 i32)
+  (local $112 i32)
+  (local $113 i32)
+  (local $114 i32)
+  (local $115 i32)
+  (local $116 i32)
+  (local $117 i32)
   global.get $assembly/index/num_vertices
   i32.const 3
   i32.mul
   call $assembly/index/VectorXd.Zeros
+  local.set $0
+  i32.const 0
+  local.set $1
+  loop $for-loop|0
+   local.get $1
+   global.get $assembly/index/num_faces
+   i32.lt_s
+   local.set $2
+   local.get $2
+   if
+    global.get $assembly/index/faces
+    i32.const 3
+    local.get $1
+    i32.mul
+    i32.const 0
+    i32.add
+    call $assembly/index/VectorXi#get
+    local.set $3
+    global.get $assembly/index/faces
+    i32.const 3
+    local.get $1
+    i32.mul
+    i32.const 1
+    i32.add
+    call $assembly/index/VectorXi#get
+    local.set $4
+    global.get $assembly/index/faces
+    i32.const 3
+    local.get $1
+    i32.mul
+    i32.const 2
+    i32.add
+    call $assembly/index/VectorXi#get
+    local.set $5
+    global.get $assembly/index/vertices
+    i32.const 3
+    i32.const 3
+    local.get $3
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $6
+    global.get $assembly/index/vertices
+    i32.const 3
+    i32.const 3
+    local.get $4
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $7
+    global.get $assembly/index/vertices
+    i32.const 3
+    i32.const 3
+    local.get $5
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $8
+    global.get $assembly/index/q
+    i32.const 3
+    i32.const 3
+    local.get $3
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $9
+    global.get $assembly/index/q
+    i32.const 3
+    i32.const 3
+    local.get $4
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $10
+    global.get $assembly/index/q
+    i32.const 3
+    i32.const 3
+    local.get $5
+    i32.mul
+    call $assembly/index/VectorXd#segment
+    local.set $11
+    local.get $10
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $12
+    local.get $11
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $13
+    call $assembly/index/VectorXd#cross
+    local.tee $14
+    call $assembly/index/VectorXd#normalized
+    local.set $15
+    local.get $7
+    local.get $6
+    call $assembly/index/VectorXd#subv
+    local.tee $16
+    call $assembly/index/VectorXd#normalized
+    local.tee $17
+    local.get $8
+    local.get $6
+    call $assembly/index/VectorXd#subv
+    local.tee $18
+    call $assembly/index/VectorXd#normalized
+    local.tee $19
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $20
+    local.get $10
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $21
+    call $assembly/index/VectorXd#normalized
+    local.tee $22
+    local.get $11
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $23
+    call $assembly/index/VectorXd#normalized
+    local.tee $24
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $25
+    local.get $15
+    local.get $10
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $26
+    call $assembly/index/VectorXd#cross
+    local.tee $27
+    local.get $10
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $28
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $29
+    local.get $15
+    local.get $11
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $30
+    call $assembly/index/VectorXd#cross
+    local.tee $31
+    local.get $11
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $32
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $33
+    f32.const -1
+    call $assembly/index/VectorXd#muls
+    local.tee $34
+    call $assembly/index/VectorXd#addv
+    local.tee $35
+    global.get $assembly/index/k_face
+    f32.neg
+    local.get $25
+    local.get $20
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $36
+    local.get $15
+    local.get $10
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $37
+    call $assembly/index/VectorXd#cross
+    local.tee $38
+    local.get $10
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $39
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $40
+    f32.const -1
+    call $assembly/index/VectorXd#muls
+    local.tee $41
+    global.get $assembly/index/k_face
+    f32.neg
+    local.get $25
+    local.get $20
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $42
+    local.get $15
+    local.get $11
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $43
+    call $assembly/index/VectorXd#cross
+    local.tee $44
+    local.get $11
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $45
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $46
+    global.get $assembly/index/k_face
+    f32.neg
+    local.get $25
+    local.get $20
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $47
+    local.get $8
+    local.get $7
+    call $assembly/index/VectorXd#subv
+    local.tee $48
+    call $assembly/index/VectorXd#normalized
+    local.tee $49
+    local.get $6
+    local.get $7
+    call $assembly/index/VectorXd#subv
+    local.tee $50
+    call $assembly/index/VectorXd#normalized
+    local.tee $51
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $52
+    local.get $11
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $53
+    call $assembly/index/VectorXd#normalized
+    local.tee $54
+    local.get $9
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $55
+    call $assembly/index/VectorXd#normalized
+    local.tee $56
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $57
+    local.get $15
+    local.get $9
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $58
+    call $assembly/index/VectorXd#cross
+    local.tee $59
+    local.get $9
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $60
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $61
+    global.get $assembly/index/k_face
+    f32.neg
+    local.get $57
+    local.get $52
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $62
+    local.get $15
+    local.get $9
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $63
+    call $assembly/index/VectorXd#cross
+    local.tee $64
+    local.get $9
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $65
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $66
+    f32.const -1
+    call $assembly/index/VectorXd#muls
+    local.tee $67
+    local.get $15
+    local.get $11
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $68
+    call $assembly/index/VectorXd#cross
+    local.tee $69
+    local.get $11
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $70
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $71
+    call $assembly/index/VectorXd#addv
+    local.tee $72
+    global.get $assembly/index/k_face
+    f32.neg
+    local.get $57
+    local.get $52
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $73
+    local.get $15
+    local.get $11
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $74
+    call $assembly/index/VectorXd#cross
+    local.tee $75
+    local.get $11
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $76
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $77
+    f32.const -1
+    call $assembly/index/VectorXd#muls
+    local.tee $78
+    global.get $assembly/index/k_face
+    f32.neg
+    local.get $57
+    local.get $52
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $79
+    local.get $8
+    local.get $6
+    call $assembly/index/VectorXd#subv
+    local.tee $80
+    call $assembly/index/VectorXd#normalized
+    local.tee $81
+    local.get $8
+    local.get $7
+    call $assembly/index/VectorXd#subv
+    local.tee $82
+    call $assembly/index/VectorXd#normalized
+    local.tee $83
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $84
+    local.get $11
+    local.get $9
+    call $assembly/index/VectorXd#subv
+    local.tee $85
+    call $assembly/index/VectorXd#normalized
+    local.tee $86
+    local.get $11
+    local.get $10
+    call $assembly/index/VectorXd#subv
+    local.tee $87
+    call $assembly/index/VectorXd#normalized
+    local.tee $88
+    call $assembly/index/VectorXd#dot
+    call $~lib/math/NativeMathf.acos
+    local.set $89
+    local.get $15
+    local.get $9
+    local.get $11
+    call $assembly/index/VectorXd#subv
+    local.tee $90
+    call $assembly/index/VectorXd#cross
+    local.tee $91
+    local.get $9
+    local.get $11
+    call $assembly/index/VectorXd#subv
+    local.tee $92
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $93
+    f32.const -1
+    call $assembly/index/VectorXd#muls
+    local.tee $94
+    global.get $assembly/index/k_face
+    f32.neg
+    local.get $57
+    local.get $52
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $95
+    local.get $15
+    local.get $10
+    local.get $11
+    call $assembly/index/VectorXd#subv
+    local.tee $96
+    call $assembly/index/VectorXd#cross
+    local.tee $97
+    local.get $10
+    local.get $11
+    call $assembly/index/VectorXd#subv
+    local.tee $98
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $99
+    global.get $assembly/index/k_face
+    f32.neg
+    local.get $57
+    local.get $52
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $100
+    local.get $15
+    local.get $9
+    local.get $11
+    call $assembly/index/VectorXd#subv
+    local.tee $101
+    call $assembly/index/VectorXd#cross
+    local.tee $102
+    local.get $9
+    local.get $11
+    call $assembly/index/VectorXd#subv
+    local.tee $103
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $104
+    local.get $15
+    local.get $10
+    local.get $11
+    call $assembly/index/VectorXd#subv
+    local.tee $105
+    call $assembly/index/VectorXd#cross
+    local.tee $106
+    local.get $10
+    local.get $11
+    call $assembly/index/VectorXd#subv
+    local.tee $107
+    call $assembly/index/VectorXd#squaredNorm
+    call $assembly/index/VectorXd#divs
+    local.tee $108
+    f32.const -1
+    call $assembly/index/VectorXd#muls
+    local.tee $109
+    call $assembly/index/VectorXd#addv
+    local.tee $110
+    global.get $assembly/index/k_face
+    f32.neg
+    local.get $57
+    local.get $52
+    f32.sub
+    f32.mul
+    call $assembly/index/VectorXd#muls
+    local.set $111
+    local.get $36
+    local.get $62
+    call $assembly/index/VectorXd#addv
+    local.tee $112
+    local.get $95
+    call $assembly/index/VectorXd#addv
+    local.set $113
+    local.get $42
+    local.get $73
+    call $assembly/index/VectorXd#addv
+    local.tee $114
+    local.get $100
+    call $assembly/index/VectorXd#addv
+    local.set $115
+    local.get $47
+    local.get $79
+    call $assembly/index/VectorXd#addv
+    local.tee $116
+    local.get $111
+    call $assembly/index/VectorXd#addv
+    local.set $117
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 0
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 0
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $113
+    i32.const 0
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 1
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 1
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $113
+    i32.const 1
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 2
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $3
+    i32.mul
+    i32.const 2
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $113
+    i32.const 2
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 0
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 0
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $115
+    i32.const 0
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 1
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 1
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $115
+    i32.const 1
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 2
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $4
+    i32.mul
+    i32.const 2
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $115
+    i32.const 2
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 0
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 0
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $117
+    i32.const 0
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 1
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 1
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $117
+    i32.const 1
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 2
+    i32.add
+    local.get $0
+    i32.const 3
+    local.get $5
+    i32.mul
+    i32.const 2
+    i32.add
+    call $assembly/index/VectorXd#get
+    local.get $117
+    i32.const 2
+    call $assembly/index/VectorXd#get
+    f32.add
+    call $assembly/index/VectorXd#set
+    local.get $6
+    call $~lib/rt/pure/__release
+    local.get $7
+    call $~lib/rt/pure/__release
+    local.get $8
+    call $~lib/rt/pure/__release
+    local.get $9
+    call $~lib/rt/pure/__release
+    local.get $10
+    call $~lib/rt/pure/__release
+    local.get $11
+    call $~lib/rt/pure/__release
+    local.get $12
+    call $~lib/rt/pure/__release
+    local.get $13
+    call $~lib/rt/pure/__release
+    local.get $14
+    call $~lib/rt/pure/__release
+    local.get $15
+    call $~lib/rt/pure/__release
+    local.get $16
+    call $~lib/rt/pure/__release
+    local.get $17
+    call $~lib/rt/pure/__release
+    local.get $18
+    call $~lib/rt/pure/__release
+    local.get $19
+    call $~lib/rt/pure/__release
+    local.get $21
+    call $~lib/rt/pure/__release
+    local.get $22
+    call $~lib/rt/pure/__release
+    local.get $23
+    call $~lib/rt/pure/__release
+    local.get $24
+    call $~lib/rt/pure/__release
+    local.get $26
+    call $~lib/rt/pure/__release
+    local.get $27
+    call $~lib/rt/pure/__release
+    local.get $28
+    call $~lib/rt/pure/__release
+    local.get $29
+    call $~lib/rt/pure/__release
+    local.get $30
+    call $~lib/rt/pure/__release
+    local.get $31
+    call $~lib/rt/pure/__release
+    local.get $32
+    call $~lib/rt/pure/__release
+    local.get $33
+    call $~lib/rt/pure/__release
+    local.get $34
+    call $~lib/rt/pure/__release
+    local.get $35
+    call $~lib/rt/pure/__release
+    local.get $36
+    call $~lib/rt/pure/__release
+    local.get $37
+    call $~lib/rt/pure/__release
+    local.get $38
+    call $~lib/rt/pure/__release
+    local.get $39
+    call $~lib/rt/pure/__release
+    local.get $40
+    call $~lib/rt/pure/__release
+    local.get $41
+    call $~lib/rt/pure/__release
+    local.get $42
+    call $~lib/rt/pure/__release
+    local.get $43
+    call $~lib/rt/pure/__release
+    local.get $44
+    call $~lib/rt/pure/__release
+    local.get $45
+    call $~lib/rt/pure/__release
+    local.get $46
+    call $~lib/rt/pure/__release
+    local.get $47
+    call $~lib/rt/pure/__release
+    local.get $48
+    call $~lib/rt/pure/__release
+    local.get $49
+    call $~lib/rt/pure/__release
+    local.get $50
+    call $~lib/rt/pure/__release
+    local.get $51
+    call $~lib/rt/pure/__release
+    local.get $53
+    call $~lib/rt/pure/__release
+    local.get $54
+    call $~lib/rt/pure/__release
+    local.get $55
+    call $~lib/rt/pure/__release
+    local.get $56
+    call $~lib/rt/pure/__release
+    local.get $58
+    call $~lib/rt/pure/__release
+    local.get $59
+    call $~lib/rt/pure/__release
+    local.get $60
+    call $~lib/rt/pure/__release
+    local.get $61
+    call $~lib/rt/pure/__release
+    local.get $62
+    call $~lib/rt/pure/__release
+    local.get $63
+    call $~lib/rt/pure/__release
+    local.get $64
+    call $~lib/rt/pure/__release
+    local.get $65
+    call $~lib/rt/pure/__release
+    local.get $66
+    call $~lib/rt/pure/__release
+    local.get $67
+    call $~lib/rt/pure/__release
+    local.get $68
+    call $~lib/rt/pure/__release
+    local.get $69
+    call $~lib/rt/pure/__release
+    local.get $70
+    call $~lib/rt/pure/__release
+    local.get $71
+    call $~lib/rt/pure/__release
+    local.get $72
+    call $~lib/rt/pure/__release
+    local.get $73
+    call $~lib/rt/pure/__release
+    local.get $74
+    call $~lib/rt/pure/__release
+    local.get $75
+    call $~lib/rt/pure/__release
+    local.get $76
+    call $~lib/rt/pure/__release
+    local.get $77
+    call $~lib/rt/pure/__release
+    local.get $78
+    call $~lib/rt/pure/__release
+    local.get $79
+    call $~lib/rt/pure/__release
+    local.get $80
+    call $~lib/rt/pure/__release
+    local.get $81
+    call $~lib/rt/pure/__release
+    local.get $82
+    call $~lib/rt/pure/__release
+    local.get $83
+    call $~lib/rt/pure/__release
+    local.get $85
+    call $~lib/rt/pure/__release
+    local.get $86
+    call $~lib/rt/pure/__release
+    local.get $87
+    call $~lib/rt/pure/__release
+    local.get $88
+    call $~lib/rt/pure/__release
+    local.get $90
+    call $~lib/rt/pure/__release
+    local.get $91
+    call $~lib/rt/pure/__release
+    local.get $92
+    call $~lib/rt/pure/__release
+    local.get $93
+    call $~lib/rt/pure/__release
+    local.get $94
+    call $~lib/rt/pure/__release
+    local.get $95
+    call $~lib/rt/pure/__release
+    local.get $96
+    call $~lib/rt/pure/__release
+    local.get $97
+    call $~lib/rt/pure/__release
+    local.get $98
+    call $~lib/rt/pure/__release
+    local.get $99
+    call $~lib/rt/pure/__release
+    local.get $100
+    call $~lib/rt/pure/__release
+    local.get $101
+    call $~lib/rt/pure/__release
+    local.get $102
+    call $~lib/rt/pure/__release
+    local.get $103
+    call $~lib/rt/pure/__release
+    local.get $104
+    call $~lib/rt/pure/__release
+    local.get $105
+    call $~lib/rt/pure/__release
+    local.get $106
+    call $~lib/rt/pure/__release
+    local.get $107
+    call $~lib/rt/pure/__release
+    local.get $108
+    call $~lib/rt/pure/__release
+    local.get $109
+    call $~lib/rt/pure/__release
+    local.get $110
+    call $~lib/rt/pure/__release
+    local.get $111
+    call $~lib/rt/pure/__release
+    local.get $112
+    call $~lib/rt/pure/__release
+    local.get $113
+    call $~lib/rt/pure/__release
+    local.get $114
+    call $~lib/rt/pure/__release
+    local.get $115
+    call $~lib/rt/pure/__release
+    local.get $116
+    call $~lib/rt/pure/__release
+    local.get $117
+    call $~lib/rt/pure/__release
+    local.get $1
+    i32.const 1
+    i32.add
+    local.set $1
+    br $for-loop|0
+   end
+  end
+  local.get $0
  )
  (func $assembly/index/compute_damping_force (result i32)
   (local $0 i32)
