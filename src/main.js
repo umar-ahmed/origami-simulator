@@ -70,20 +70,29 @@ const Layout = styled.div`
   height: 100%;
   width: 100%;
   overflow: hidden;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   grid-template-areas: "content preview";
+  grid-gap: 2rem;
+  padding: 2rem;
+
+  background-color: #efefef;
 `;
 
-const PatternEditorContainer = styled.div`
+const Container = styled.div`
+  background-color: #ffffff;
+  border-radius: 2rem;
+  box-shadow: 0px 4px 5px rgb(0 0 0 / 15%);
+`;
+
+const PatternEditorContainer = styled(Container)`
   grid-area: content;
-  border: 1px solid red;
 `;
 
-const PreviewContainer = styled.div`
+const PreviewContainer = styled(Container)`
   grid-area: preview;
-  border: 1px solid red;
 `;
 
 function App() {
@@ -157,8 +166,6 @@ function App() {
           />
 
           <OrbitControls />
-          <gridHelper args={[10, 10]} />
-          <axesHelper args={[5]} />
         </Canvas>
       </PreviewContainer>
     </Layout>
