@@ -142,19 +142,6 @@ scene.add(lines);
 camera.position.z = 3;
 controls.update();
 
-// // Setup edge vector selection matrix
-// const E = pool.zeros([num_edges * 3, num_vertices * 3], "float32");
-// for (let i = 0; i < num_edges; i++) {
-//   const aIndex = e.get(i, 0);
-//   const bIndex = e.get(i, 1);
-//   E.set(3 * i + 0, 3 * aIndex + 0, -1.0);
-//   E.set(3 * i + 1, 3 * aIndex + 1, -1.0);
-//   E.set(3 * i + 2, 3 * aIndex + 2, -1.0);
-//   E.set(3 * i + 0, 3 * bIndex + 0, 1.0);
-//   E.set(3 * i + 1, 3 * bIndex + 1, 1.0);
-//   E.set(3 * i + 2, 3 * bIndex + 2, 1.0);
-// }
-
 // Set up web worker
 let worker = new Worker("./worker.js");
 

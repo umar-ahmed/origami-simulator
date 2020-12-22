@@ -17,7 +17,13 @@
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
+    "drei": "^2.2.12",
+    "framer-motion": "^3.1.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-three-fiber": "^5.3.10",
     "serve": "^11.3.2",
+    "styled-components": "^5.2.1",
     "three": "^0.123.0",
     "wasm-engine": "workspace:./packages/wasm-engine"
   }
